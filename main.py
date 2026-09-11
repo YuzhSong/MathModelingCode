@@ -11,7 +11,7 @@ from q3.safety import PRACTICE_CONFIRMATION, require_practice_confirmation
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Q3 unified entry point (practice/offline only).")
     parser.add_argument("--mode", choices=("official", "offline"), default="official")
-    parser.add_argument("--strategy", default="v3", help="Strategy generation for offline evaluation; official uses the HTTP planner.")
+    parser.add_argument("--strategy", default="v4", help="Strategy generation. Offline: v0-v4. Official: v4 (recommended, rolling dynamic routing) or v3 (baseline planner).")
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"))
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))
     parser.add_argument("--confirm-practice", help=f"Required for official practice mode: {PRACTICE_CONFIRMATION}")
@@ -36,17 +36,33 @@ def main() -> int:
         print(str(exc), file=sys.stderr)
         return 3
 
+    if args.strategy not in ("v3", "v4"):
+        print("官方模式仅支持 --strategy v3 或 v4。", file=sys.stderr)
+        return 2
+
     from q3.api_client import RequestIdFactory, SimulatorClient
     from q3.logger import JsonlLogger
-    from q3.planner import Q3BaselinePlanner, Q3Config
 
+    logger = JsonlLogger(Path(args.log))
     client = SimulatorClient(
         robot_id=args.robot_id,
         base_url=args.base_url,
         request_ids=RequestIdFactory("q3"),
-        logger=JsonlLogger(Path(args.log)),
+        logger=logger,
     )
-    summary = Q3BaselinePlanner(client, logger=JsonlLogger(Path(args.log)), config=Q3Config()).run()
+    if args.strategy == "v4":
+        from q3.models import ChannelStatus
+        from q3.offline_policy import policy_v4_official
+
+        policy = policy_v4_official(client)
+        cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
+        print(f"Q3 V4 practice run complete: {cleared} channels cleared.")
+        print(f"log: {Path(args.log).resolve()}")
+        return 0
+
+    from q3.planner import Q3BaselinePlanner, Q3Config
+
+    summary = Q3BaselinePlanner(client, logger=logger, config=Q3Config()).run()
     print("Q3 practice summary:", summary)
     return 0
 

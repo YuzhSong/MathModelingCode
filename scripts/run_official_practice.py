@@ -14,12 +14,14 @@ from q3.safety import PRACTICE_CONFIRMATION, require_practice_confirmation
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Q3 omnidirectional baseline runner.")
+    parser = argparse.ArgumentParser(description="Q3 official practice runner (practice-gated).")
+    parser.add_argument("--strategy", choices=("v3", "v4"), default="v4", help="v4: rolling dynamic routing (recommended). v3: baseline planner.")
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"), help="Current logged-in team/robot id.")
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))
     parser.add_argument("--log", default="logs/q3_official.jsonl")
-    parser.add_argument("--search-radius", type=float, default=1150.0)
-    parser.add_argument("--max-localization-measures", type=int, default=8)
+    parser.add_argument("--search-radius", type=float, default=1150.0, help="v3 baseline planner search ring radius.")
+    parser.add_argument("--search-points-n", type=int, default=8, help="v4 outer ring point count.")
+    parser.add_argument("--max-localization-measures", type=int, default=8, help="v3 baseline planner localization cap.")
     parser.add_argument(
         "--confirm-practice",
         help=f"Safety gate. Must equal {PRACTICE_CONFIRMATION!r} after confirming the simulator is in Q3 practice/simulation mode.",
@@ -45,6 +47,16 @@ def main() -> int:
         request_ids=RequestIdFactory("q3"),
         logger=logger,
     )
+    if args.strategy == "v4":
+        from q3.models import ChannelStatus
+        from q3.offline_policy import policy_v4_official
+
+        policy = policy_v4_official(client, n=args.search_points_n)
+        cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
+        print(f"Q3 V4 practice run complete: {cleared} channels cleared.")
+        print(f"log: {Path(args.log).resolve()}")
+        return 0
+
     planner = Q3BaselinePlanner(
         client,
         logger=logger,

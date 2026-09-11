@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 离线推荐策略：V4，入口为 `q3.offline_policy.policy_v4`。
-- 官方 HTTP 控制器：`q3.planner.Q3BaselinePlanner`，通过 practice confirmation gate 运行。
+- 官方 HTTP 入口默认 V4（`main.py --mode official --strategy v4`，`q3.offline_policy.policy_v4_official`）；v3 基线控制器仍可用。两者均需 practice confirmation gate。V4 尚未完成官方联调。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
 
@@ -31,8 +31,10 @@ python main.py --mode offline --strategy v4
 仅当官方模拟器已经由人工确认处于“问题3演练测试/模拟测试”时，才可运行。严禁在正式测试中运行，也不要把本地默认地址误认为官方地址。
 
 ```text
-python main.py --mode official --strategy v3 --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --confirm-practice Q3_PRACTICE_ONLY
+python main.py --mode official --strategy v4 --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --confirm-practice Q3_PRACTICE_ONLY
 ```
+
+`--strategy v3` 可切回基线控制器。完整参数见 `scripts/run_official_practice.py --help`（同样默认 v4，另支持 `--search-points-n`）。
 
 最小接口 smoke test：
 

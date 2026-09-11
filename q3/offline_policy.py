@@ -477,3 +477,39 @@ class DynamicRoutingPolicy(RouteOptimizedPolicy):
 def policy_v4(runner: Any, n: int = 8) -> None:
     """V4: rolling online routing over SEARCH/MEASURE/CLEAR tasks."""
     DynamicRoutingPolicy(runner, n=n).run()
+
+
+class OfficialClientRunnerAdapter:
+    """Adapt an official SimulatorClient to the offline episode-runner call shape.
+
+    Lets DynamicRoutingPolicy (V4) run unchanged against the official HTTP
+    simulator; the client keeps its own request logging and response validation.
+    """
+
+    def __init__(self, client: Any):
+        if hasattr(client, "case"):
+            raise SimulatorTransportError("official client must not expose ground truth case")
+        self._client = client
+
+    def enter(self) -> dict:
+        return self._client.enter()
+
+    def measure(self, x: float, y: float, channel: int) -> dict:
+        return self._client.measure(Point(x, y), int(channel))
+
+    def clear(self, x: float, y: float, channel: int) -> dict:
+        return self._client.clear(Point(x, y), int(channel))
+
+    def exit(self) -> dict:
+        return self._client.exit()
+
+
+def policy_v4_official(client: Any, n: int = 8) -> DynamicRoutingPolicy:
+    """Run V4 rolling dynamic routing against an official SimulatorClient.
+
+    The caller is responsible for the practice confirmation gate; this function
+    performs enter/exit itself, mirroring the offline entry points.
+    """
+    policy = DynamicRoutingPolicy(OfficialClientRunnerAdapter(client), n=n)
+    policy.run()
+    return policy
