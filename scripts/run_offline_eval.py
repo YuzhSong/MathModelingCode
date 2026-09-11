@@ -9,6 +9,10 @@ from itertools import combinations
 from pathlib import Path
 from typing import Callable
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from offline_sim.case import generate_case, generate_stress_case
 from offline_sim.harness import EpisodeResult, aggregate, run_episode
 from q3.offline_policy import policy_v0, policy_v1, policy_v2, policy_v3, policy_v4, theoretical_outer_radius, theoretical_route_length
@@ -33,7 +37,7 @@ def parse_seed_range(spec: str) -> list[int]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Offline Q3 policy evaluation on fixed practice/simulation cases.")
-    parser.add_argument("--versions", default="v0", help="Comma-separated versions: v0,v1,v2,v3.")
+    parser.add_argument("--versions", default="v0", help="Comma-separated versions: v0,v1,v2,v3,v4.")
     parser.add_argument("--rings", default="6,7,8,9", help="Comma-separated outer ring point counts.")
     parser.add_argument("--random-seeds", default="0:100", help="Fixed random seeds, e.g. 0:100 or 1,2,3.")
     parser.add_argument("--stress-seeds", default="10000:10050", help="Fixed stress seeds.")
