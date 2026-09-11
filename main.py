@@ -19,6 +19,22 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def prompt_missing_args(args: argparse.Namespace) -> None:
+    """Interactively collect required official-mode inputs when not supplied via CLI/env."""
+    try:
+        if not args.robot_id:
+            args.robot_id = input("请输入参赛队号(须与模拟器登录队号完全一致): ").strip()
+        if not args.confirm_practice:
+            print()
+            print("安全提示: 本程序只允许连接官方'问题3演练测试/模拟测试'。")
+            print("请先在模拟器中开启'问题3演练测试'并等待5秒倒计时结束。")
+            print("确认当前不是正式测试后, 输入 Q3_PRACTICE_ONLY 继续, 直接回车则安全退出。")
+            args.confirm_practice = input("确认: ").strip() or None
+    except EOFError:
+        print()
+        print("无交互输入, 已安全退出。", file=sys.stderr)
+
+
 def main() -> int:
     args = parse_args()
     if args.mode == "offline":
@@ -27,8 +43,10 @@ def main() -> int:
         sys.argv = [sys.argv[0], "--versions", args.strategy]
         return offline_main()
 
+    prompt_missing_args(args)
+
     if not args.robot_id:
-        print("请通过 --robot-id 或环境变量 ROBOT_ID 指定参赛队号。", file=sys.stderr)
+        print("未提供参赛队号, 已退出。", file=sys.stderr)
         return 2
     try:
         require_practice_confirmation(args.confirm_practice)
