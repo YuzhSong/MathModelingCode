@@ -1,0 +1,22 @@
+[
+  {
+    "n": 6,
+    "outer_radius_m": 1122.955832457922,
+    "search_route_length_m": 6737.734994747531
+  },
+  {
+    "n": 7,
+    "outer_radius_m": 997.2013463756454,
+    "search_route_length_m": 6189.234732197984
+  },
+  {
+    "n": 8,
+    "outer_radius_m": 938.0604140004557,
+    "search_route_length_m": 5963.782919937616
+  },
+  {
+    "n": 9,
+    "outer_radius_m": 903.416262512831,
+    "search_route_length_m": 5847.201215910886
+  }
+]

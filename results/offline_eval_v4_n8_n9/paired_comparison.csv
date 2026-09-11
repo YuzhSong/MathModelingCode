@@ -1,0 +1,7 @@
+n,suite,base_version,target_version,delta_definition,pairs,target_win_rate,mean_delta_s,median_delta_s,p95_delta_s,max_delta_s
+8,collinear,v3,v4,target_time_minus_base_time_s,50,0.92,-638.28239598,-650.3667764999998,108.75790429999998,193.84581700000035
+8,min_reff,v3,v4,target_time_minus_base_time_s,50,1.0,-2101.8316369000004,-2085.789099,-1151.7712829000002,-932.7186080000001
+8,random,v3,v4,target_time_minus_base_time_s,100,1.0,-2130.20807101,-2100.6898279999996,-1082.8657317500006,-612.154106
+9,collinear,v3,v4,target_time_minus_base_time_s,50,0.92,-656.90046982,-552.2208350000001,30.750740250000046,248.2719400000001
+9,min_reff,v3,v4,target_time_minus_base_time_s,50,1.0,-1943.6273179,-1876.13231,-760.6413241000002,-621.0688290000003
+9,random,v3,v4,target_time_minus_base_time_s,100,1.0,-2003.38631141,-1964.533991,-952.8562558999997,-496.04060200000004
