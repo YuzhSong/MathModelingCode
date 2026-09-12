@@ -79,7 +79,7 @@ def main() -> int:
     from q3.run_logger import RunLogger, print_run_summary
 
     logger = JsonlLogger(Path(args.log))
-    run_logger = RunLogger(mode="practice")
+    run_logger = RunLogger(mode="practice", strategy=args.strategy)
     client = SimulatorClient(
         robot_id=args.robot_id,
         base_url=args.base_url,

@@ -26,6 +26,7 @@ SPEED_MPS = 5.0  # robot speed, same convention as offline_sim/engine.py
 RUNS_SUMMARY_FIELDS = [
     "run_id",
     "mode",
+    "strategy",
     "case_id",
     "source_count",
     "cleared_count",
@@ -66,9 +67,10 @@ def _now_iso() -> str:
 class RunLogger:
     """Collects one official run into logs/q3/<run_id>/ plus a global CSV row."""
 
-    def __init__(self, base_dir: Path | str = Path("logs/q3"), mode: str = "practice"):
+    def __init__(self, base_dir: Path | str = Path("logs/q3"), mode: str = "practice", strategy: str | None = None):
         self.base_dir = Path(base_dir)
         self.mode = mode
+        self.strategy = strategy
         self.run_id: str | None = None
         self.run_dir: Path | None = None
         self.case_id: str | None = None
@@ -154,6 +156,7 @@ class RunLogger:
         summary: dict[str, Any] = {
             "run_id": self.run_id,
             "mode": self.mode,
+            "strategy": self.strategy,
             "case_id": self.case_id,
             "start_time": self._start_iso,
             "end_time": self._end_iso,
@@ -348,6 +351,7 @@ def print_run_summary(summary: dict[str, Any]) -> None:
         "================ Q3 RUN SUMMARY ================",
         f"Run ID:          {summary.get('run_id')}",
         f"Mode:            {str(summary.get('mode')).upper()}",
+        f"Strategy:        {summary.get('strategy') or 'N/A'}",
         f"Case ID:         {summary.get('case_id') or 'N/A'}",
         "",
         f"Cleared:         {cleared}",
