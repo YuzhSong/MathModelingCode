@@ -4,8 +4,8 @@
 
 ## 当前状态
 
-- 离线推荐策略：V4，入口为 `q3.offline_policy.policy_v4`。
-- 官方 HTTP 入口默认 V4（`main.py --mode official --strategy v4`，`q3.offline_policy.policy_v4_official`）；v3 基线控制器仍可用。两者均需 practice confirmation gate。V4 尚未完成官方联调。
+- 离线最终候选为 V6/n=8；V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
+- 官方 HTTP 入口默认仍为 V4（`main.py --mode official --strategy v4`）；带 V6 到官方演练时显式使用 `--strategy v6`。V3/V4/V6 均需 practice confirmation gate。本仓库不会自动触发演练或正式测试。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
 
@@ -26,6 +26,22 @@ python main.py --mode offline --strategy v4
 
 完整固定 seed 评估请使用 `scripts/run_offline_eval.py --help`。
 
+V5 FOUND-source 补测任务生成实验：
+
+```text
+python scripts/run_v5_eval.py --versions v4,v5a,v5b,v5final --random-seeds 0:100 --stress-seeds 10000:10050 --out-dir results/offline_eval_v5_n8
+```
+
+V5 结果见 `results/offline_eval_v5_n8/report.md`。当前 V5-A/V5-B/V5-final 均未达到替换门槛，不接入官方入口。
+
+V6 route-aware 补测任务生成实验：
+
+```text
+python scripts/run_v6_eval.py --versions v4,v5b,v6 --random-seeds 0:100 --stress-seeds 10000:10050 --out-dir results/offline_eval_v6_n8
+```
+
+V6 结果见 `results/offline_eval_v6_n8/report.md`。V6 保持 100% 清除并改善聚合均值/P95/max，但仍有 12/200 个同 seed case 比 V4 慢超过 300s，因此不替换默认的冻结 V4/n=8；它只作为显式选择的官方演练候选，不会自动运行。
+
 ## 官方演练 API
 
 仅当官方模拟器已经由人工确认处于“问题3演练测试/模拟测试”时，才可运行。严禁在正式测试中运行，也不要把本地默认地址误认为官方地址。
@@ -34,7 +50,7 @@ python main.py --mode offline --strategy v4
 python main.py --mode official --strategy v4 --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --confirm-practice Q3_PRACTICE_ONLY
 ```
 
-`--strategy v3` 可切回基线控制器。完整参数见 `scripts/run_official_practice.py --help`（同样默认 v4，另支持 `--search-points-n`）。
+`--strategy v3` 可切回基线控制器，`--strategy v6` 运行冻结候选的官方客户端适配入口。完整参数见 `scripts/run_official_practice.py --help`（默认 v4，支持 `--search-points-n`）。
 
 最小接口 smoke test：
 
@@ -54,7 +70,7 @@ python scripts/run_offline_eval.py --versions v3,v4 --rings 8,9 --random-seeds 0
 
 ## 目录与 Git
 
-目录说明见 [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)，版本说明见 [docs/VERSIONS.md](docs/VERSIONS.md)。历史结果保存在 `results/`。
+目录说明见 [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)，Windows 携带说明见 [docs/WINDOWS_PRACTICE.md](docs/WINDOWS_PRACTICE.md)，版本说明见 [docs/VERSIONS.md](docs/VERSIONS.md)。历史结果按索引保存在 `results/`。
 
 整理前 checkpoint：`27167c3`。建议整理完成后提交：
 

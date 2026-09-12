@@ -1,0 +1,24 @@
+{
+  "environment": "local offline_sim practice only",
+  "official_http_called": false,
+  "official_formal_test_run": false,
+  "only_variable": "number of uniformly spaced outer SEARCH points n",
+  "versions": [
+    "v4",
+    "v6"
+  ],
+  "rings": [
+    6,
+    8
+  ],
+  "random_seeds": "0:2",
+  "stress_seeds": "10000:10002",
+  "suites": [
+    "random",
+    "min_reff",
+    "collinear"
+  ],
+  "oracle_benchmarks_enabled": false,
+  "primary_metric": "mean_i(total_time_i / true_source_count_i)",
+  "time_identity_abs_max_s": 3.9203637243190315e-06
+}

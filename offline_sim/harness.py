@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import math
 import statistics
+import time
 from dataclasses import dataclass, field as dc_field
 from typing import Callable, Optional
 
@@ -31,6 +32,8 @@ class ActionRecord:
     y: float
     channel: int
     result: str
+    virtual_time_s: float = 0.0
+    svd_deg: float | None = None
 
 
 @dataclass
@@ -50,6 +53,8 @@ class EpisodeResult:
     n_clear: int = 0
     n_clear_fail: int = 0              # clear 返回 no_target_in_range 的次数
     n_near: int = 0
+    policy_runtime_s: float = 0.0
+    policy_diagnostics: list[dict] = dc_field(default_factory=list, repr=False)
     action_log: list[ActionRecord] = dc_field(default_factory=list, repr=False)
     conditional_route_oracle_time_s: float | None = None
     conditional_route_oracle_method: str | None = None
@@ -101,7 +106,17 @@ class EpisodeRunner:
         self.res.n_measure += 1
         if outcome is not None and outcome.result == "near":
             self.res.n_near += 1
-        self.res.action_log.append(ActionRecord("measure", float(x), float(y), int(channel), outcome.result if outcome is not None else "finished"))
+        self.res.action_log.append(
+            ActionRecord(
+                "measure",
+                float(x),
+                float(y),
+                int(channel),
+                outcome.result if outcome is not None else "finished",
+                self.engine.st.virtual_time_s,
+                None if outcome is None else outcome.svd_deg,
+            )
+        )
         return resp
 
     def clear(self, x: float, y: float, channel: int) -> Optional[dict]:
@@ -119,11 +134,25 @@ class EpisodeRunner:
             self.res.clear_action_time_s += 3.0
         else:
             self.res.clear_action_time_s += 5.0
-        self.res.action_log.append(ActionRecord("clear", float(x), float(y), int(channel), outcome.result if outcome is not None else "finished"))
+        self.res.action_log.append(
+            ActionRecord(
+                "clear",
+                float(x),
+                float(y),
+                int(channel),
+                outcome.result if outcome is not None else "finished",
+                self.engine.st.virtual_time_s,
+                None,
+            )
+        )
         return resp
 
     def exit(self) -> Optional[dict]:
         return self.engine.exit()
+
+    def record_policy_diagnostic(self, event: dict) -> None:
+        """Accept policy-authored diagnostics without exposing simulator truth."""
+        self.res.policy_diagnostics.append(dict(event))
 
     # ---- 状态查询（不泄露真值）----
     @property
@@ -170,6 +199,9 @@ class PolicyRunnerProxy:
     def exit(self) -> Optional[dict]:
         return self._runner.exit()
 
+    def record_policy_diagnostic(self, event: dict) -> None:
+        self._runner.record_policy_diagnostic(event)
+
     @property
     def virtual_time_s(self) -> float:
         return self._runner.virtual_time_s
@@ -183,21 +215,30 @@ class PolicyRunnerProxy:
         return self._runner.current_channel
 
 
-def run_episode(case: Case, policy: Callable[[EpisodeRunner], None]) -> EpisodeResult:
+def run_episode(
+    case: Case,
+    policy: Callable[[EpisodeRunner], None],
+    *,
+    include_oracles: bool = True,
+) -> EpisodeResult:
     """跑单局：交给 policy 驱动，返回统计。策略异常不致命，记录到 result.error。"""
     runner = EpisodeRunner(case)
+    started = time.perf_counter()
     try:
         policy(PolicyRunnerProxy(runner))
     except Exception as e:  # 策略 bug 不应崩掉整个蒙特卡洛
         runner.res.error = f"{type(e).__name__}: {e}"
+    finally:
+        runner.res.policy_runtime_s = time.perf_counter() - started
     result = runner.finalize()
-    try:
-        from q3.oracles import attach_oracle_benchmarks
+    if include_oracles:
+        try:
+            from q3.oracles import attach_oracle_benchmarks
 
-        attach_oracle_benchmarks(case, result)
-    except Exception as e:
-        suffix = f"oracle_error={type(e).__name__}: {e}"
-        result.error = suffix if not result.error else f"{result.error}; {suffix}"
+            attach_oracle_benchmarks(case, result)
+        except Exception as e:
+            suffix = f"oracle_error={type(e).__name__}: {e}"
+            result.error = suffix if not result.error else f"{result.error}; {suffix}"
     return result
 
 

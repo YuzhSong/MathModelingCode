@@ -1,0 +1,6 @@
+label,suite,seed,base,target,delta_time_s,base_time_s,target_time_s
+v6_big_win_v4,random,72,v4,v6,-814.4334709999998,3955.017918,3140.584447
+v6_big_loss_v4,random,70,v4,v6,553.0122359999996,3585.272342,4138.284578
+m2_best_improvement,random,81,v6,m2_b0p1,-714.1681869999998,3960.618533,3246.450346
+n1_best_improvement,random,90,v6,n1,-764.1044980000001,4291.974287,3527.869789
+n1_worst_regression,random,95,v6,n1,419.76232800000025,3496.421923,3916.184251

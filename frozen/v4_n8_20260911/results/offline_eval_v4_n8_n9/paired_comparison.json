@@ -1,0 +1,80 @@
+[
+  {
+    "n": 8,
+    "suite": "collinear",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 50,
+    "target_win_rate": 0.92,
+    "mean_delta_s": -638.28239598,
+    "median_delta_s": -650.3667764999998,
+    "p95_delta_s": 108.75790429999998,
+    "max_delta_s": 193.84581700000035
+  },
+  {
+    "n": 8,
+    "suite": "min_reff",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 50,
+    "target_win_rate": 1.0,
+    "mean_delta_s": -2101.8316369000004,
+    "median_delta_s": -2085.789099,
+    "p95_delta_s": -1151.7712829000002,
+    "max_delta_s": -932.7186080000001
+  },
+  {
+    "n": 8,
+    "suite": "random",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 100,
+    "target_win_rate": 1.0,
+    "mean_delta_s": -2130.20807101,
+    "median_delta_s": -2100.6898279999996,
+    "p95_delta_s": -1082.8657317500006,
+    "max_delta_s": -612.154106
+  },
+  {
+    "n": 9,
+    "suite": "collinear",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 50,
+    "target_win_rate": 0.92,
+    "mean_delta_s": -656.90046982,
+    "median_delta_s": -552.2208350000001,
+    "p95_delta_s": 30.750740250000046,
+    "max_delta_s": 248.2719400000001
+  },
+  {
+    "n": 9,
+    "suite": "min_reff",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 50,
+    "target_win_rate": 1.0,
+    "mean_delta_s": -1943.6273179,
+    "median_delta_s": -1876.13231,
+    "p95_delta_s": -760.6413241000002,
+    "max_delta_s": -621.0688290000003
+  },
+  {
+    "n": 9,
+    "suite": "random",
+    "base_version": "v3",
+    "target_version": "v4",
+    "delta_definition": "target_time_minus_base_time_s",
+    "pairs": 100,
+    "target_win_rate": 1.0,
+    "mean_delta_s": -2003.38631141,
+    "median_delta_s": -1964.533991,
+    "p95_delta_s": -952.8562558999997,
+    "max_delta_s": -496.04060200000004
+  }
+]

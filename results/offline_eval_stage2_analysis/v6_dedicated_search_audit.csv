@@ -1,0 +1,10 @@
+metric,value
+executed_supplements,3482
+dedicated_supplements,2686
+dedicated_with_legal_future_search,1627
+dedicated_legal_search_within_100m,49
+dedicated_legal_search_within_250m,337
+dedicated_legal_search_within_500m,807
+dedicated_legal_search_within_1000m,1572
+mean_dedicated_route_marginal_s,33.791339524073855
+mean_future_search_objective_minus_selected_s,58.02200761810456

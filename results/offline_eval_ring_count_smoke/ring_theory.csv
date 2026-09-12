@@ -1,0 +1,3 @@
+n,outer_radius_m,outer_points,search_points_total,theoretical_outer_route_m,theoretical_outer_route_time_s,full_unknown_scan_measure_time_s,full_unknown_scan_switch_time_s,full_unknown_scan_proxy_s,formula
+6,1122.955832457922,6,7,6737.734994747531,1347.5469989495064,700.0,133.0,2180.5469989495064,a_n=1800*cos(pi/n)-sqrt(1000^2-1800^2*sin(pi/n)^2)
+8,938.0604140004557,8,9,5963.782919937616,1192.756583987523,900.0,171.0,2263.7565839875233,a_n=1800*cos(pi/n)-sqrt(1000^2-1800^2*sin(pi/n)^2)

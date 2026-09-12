@@ -1,0 +1,6 @@
+kind,seed,suite,version
+fast_vs_v6,0,random,way1
+slow_vs_v6,0,random,way1
+fast_vs_v6,0,random,way3
+slow_vs_v6,0,random,way3
+v6_leads_external,0,random,v6
