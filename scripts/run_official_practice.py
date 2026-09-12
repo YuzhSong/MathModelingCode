@@ -18,8 +18,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--strategy",
         choices=("v3", "v4", "v6"),
-        default="v4",
-        help="v4: frozen official baseline; v6: route-aware supplement experiment; v3: baseline planner.",
+        default="v6",
+        help="v6: route-aware supplement (default); v4: frozen official baseline; v3: baseline planner.",
     )
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"), help="Current logged-in team/robot id.")
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))

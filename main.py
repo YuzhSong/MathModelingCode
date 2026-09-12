@@ -13,8 +13,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mode", choices=("official", "offline"), default="official")
     parser.add_argument(
         "--strategy",
-        default="v4",
-        help="Q3: v3/v4/v6. Q4: w5.",
+        default="v6",
+        help="Q3: v3/v4/v6 (default v6). Q4: w5.",
     )
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"))
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))

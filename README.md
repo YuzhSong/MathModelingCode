@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 离线最终候选为 V6/n=8；V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
-- 官方 HTTP 入口默认仍为 V4（`main.py --mode official --strategy v4`）；带 V6 到官方演练时显式使用 `--strategy v6`。确认门（Q3_PRACTICE_ONLY）已按队伍决定移除，运行前请自行确认模拟器处于演练模式。
+- 官方 HTTP 入口默认 V6（`main.py --mode official` 即跑 v6）；`--strategy v4` 可切回冻结基线。确认门（Q3_PRACTICE_ONLY）已按队伍决定移除，运行前请自行确认模拟器处于演练模式。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
 
@@ -50,7 +50,7 @@ V6 结果见 `results/offline_eval_v6_n8/report.md`。V6 保持 100% 清除并�
 python main.py --mode official --strategy v4 --robot-id YOUR_ID --base-url http://127.0.0.1:2026
 ```
 
-`--strategy v3` 可切回基线控制器，`--strategy v6` 运行冻结候选的官方客户端适配入口。完整参数见 `scripts/run_official_practice.py --help`（默认 v4，支持 `--search-points-n`）。
+`--strategy v4/v3` 可切回冻结基线。完整参数见 `scripts/run_official_practice.py --help`（默认 v6，支持 `--search-points-n`）。
 
 最小接口 smoke test：
 
