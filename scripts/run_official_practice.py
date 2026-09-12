@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from q3.api_client import RequestIdFactory, SimulatorClient
 from q3.logger import JsonlLogger
 from q3.planner import Q3BaselinePlanner, Q3Config
+from q3.run_logger import RunLogger, print_run_summary
 from q3.safety import PRACTICE_CONFIRMATION, require_practice_confirmation
 
 
@@ -46,11 +47,13 @@ def main() -> int:
         return 3
 
     logger = JsonlLogger(Path(args.log))
+    run_logger = RunLogger(mode="practice")
     client = SimulatorClient(
         robot_id=args.robot_id,
         base_url=args.base_url,
         request_ids=RequestIdFactory("q3"),
         logger=logger,
+        run_logger=run_logger,
     )
     if args.strategy == "v4":
         from q3.models import ChannelStatus
@@ -60,6 +63,8 @@ def main() -> int:
         cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
         print(f"Q3 V4 practice run complete: {cleared} channels cleared.")
         print(f"log: {Path(args.log).resolve()}")
+        if run_logger.summary:
+            print_run_summary(run_logger.summary)
         return 0
 
     if args.strategy == "v6":
@@ -70,6 +75,8 @@ def main() -> int:
         cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
         print(f"Q3 V6 practice run complete: {cleared} channels cleared.")
         print(f"log: {Path(args.log).resolve()}")
+        if run_logger.summary:
+            print_run_summary(run_logger.summary)
         return 0
 
     planner = Q3BaselinePlanner(
@@ -80,6 +87,8 @@ def main() -> int:
     summary = planner.run()
     print("Q3 baseline summary:", summary)
     print(f"log: {Path(args.log).resolve()}")
+    if run_logger.summary:
+        print_run_summary(run_logger.summary)
     return 0
 
 

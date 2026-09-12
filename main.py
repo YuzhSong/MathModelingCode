@@ -21,6 +21,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--search-points-n", type=int, default=8, help="Official V4/V6 outer search point count (default: 8).")
     parser.add_argument("--confirm-practice", help=f"Required for official practice mode: {PRACTICE_CONFIRMATION}")
     parser.add_argument("--log", default="logs/q3_official.jsonl")
+    parser.add_argument(
+        "--update-source-count",
+        nargs=2,
+        metavar=("RUN_ID", "COUNT"),
+        help="Backfill the official source count of a finished run and recompute derived stats.",
+    )
     return parser.parse_args()
 
 
@@ -42,6 +48,11 @@ def prompt_missing_args(args: argparse.Namespace) -> None:
 
 def main() -> int:
     args = parse_args()
+    if args.update_source_count:
+        from scripts.update_run_metadata import update_source_count
+
+        run_id, count = args.update_source_count
+        return update_source_count(run_id, int(count))
     if args.mode == "offline":
         from scripts.run_offline_eval import main as offline_main
 
@@ -65,13 +76,16 @@ def main() -> int:
 
     from q3.api_client import RequestIdFactory, SimulatorClient
     from q3.logger import JsonlLogger
+    from q3.run_logger import RunLogger, print_run_summary
 
     logger = JsonlLogger(Path(args.log))
+    run_logger = RunLogger(mode="practice")
     client = SimulatorClient(
         robot_id=args.robot_id,
         base_url=args.base_url,
         request_ids=RequestIdFactory("q3"),
         logger=logger,
+        run_logger=run_logger,
     )
     if args.strategy == "v4":
         from q3.models import ChannelStatus
@@ -81,6 +95,8 @@ def main() -> int:
         cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
         print(f"Q3 V4 practice run complete: {cleared} channels cleared.")
         print(f"log: {Path(args.log).resolve()}")
+        if run_logger.summary:
+            print_run_summary(run_logger.summary)
         return 0
 
     if args.strategy == "v6":
@@ -91,12 +107,16 @@ def main() -> int:
         cleared = sum(1 for t in policy.tracks.values() if t.status == ChannelStatus.CLEARED)
         print(f"Q3 V6 practice run complete: {cleared} channels cleared.")
         print(f"log: {Path(args.log).resolve()}")
+        if run_logger.summary:
+            print_run_summary(run_logger.summary)
         return 0
 
     from q3.planner import Q3BaselinePlanner, Q3Config
 
     summary = Q3BaselinePlanner(client, logger=logger, config=Q3Config()).run()
     print("Q3 practice summary:", summary)
+    if run_logger.summary:
+        print_run_summary(run_logger.summary)
     return 0
 
 

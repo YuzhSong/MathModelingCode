@@ -1,3 +1,0 @@
-base,target,suite,pairs,target_win_rate,mean_delta_time_s,median_delta_time_s,p95_delta_time_s,worst_regression_s,best_improvement_s,worse_over_300s_count,mean_delta_move_m,mean_delta_measure_count,mean_delta_found_after_move_m,mean_delta_off_search_supplement_move_m
-v6,v6audit,random,1,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0
-v6,v6audit,overall,1,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0

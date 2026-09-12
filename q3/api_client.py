@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import socket
+import sys
 from dataclasses import dataclass
 from itertools import count
 from typing import Any
@@ -53,6 +54,7 @@ class SimulatorClient:
         timeout_s: float = 5.0,
         request_ids: RequestIdFactory | None = None,
         logger: JsonlLogger | None = None,
+        run_logger: Any | None = None,
     ):
         self.robot_id = robot_id
         self.base_url = base_url.rstrip("/")
@@ -60,8 +62,18 @@ class SimulatorClient:
         self.timeout_s = timeout_s
         self.request_ids = request_ids or RequestIdFactory()
         self.logger = logger or JsonlLogger(None)
+        self.run_logger = run_logger
         self.last_virtual_time_s: float | None = None
         self.current_position = Point(0.0, 0.0)
+
+    def _run_log(self, action: str, payload: dict[str, Any], response: dict[str, Any] | None = None, error: str | None = None) -> None:
+        """Passive run-logger hook: failures here must never affect the policy."""
+        if self.run_logger is None:
+            return
+        try:
+            self.run_logger.record(action, payload, response, error=error)
+        except Exception as exc:  # noqa: BLE001 - logging must never break the run
+            print(f"[run_logger] warning: record failed: {exc}", file=sys.stderr)
 
     def _base_payload(self, request_id: str) -> dict[str, Any]:
         return {
@@ -89,15 +101,18 @@ class SimulatorClient:
             text = raw.decode("utf-8", errors="replace") if raw else ""
         except (URLError, TimeoutError, socket.timeout) as exc:
             self.logger.write("transport_error", path=path, error=repr(exc))
+            self._run_log(path.strip("/"), payload, None, error=f"transport_error: {exc!r}")
             raise SimulatorTransportError(f"{path} connection failed: {exc}") from exc
 
         try:
             data = json.loads(text) if text else {}
         except json.JSONDecodeError as exc:
             self.logger.write("bad_json", path=path, status=status, body=text)
+            self._run_log(path.strip("/"), payload, None, error=f"bad_json: {exc!r}")
             raise SimulatorTransportError(f"{path} returned non-JSON body: {text!r}") from exc
 
         self.logger.write("response", path=path, http_status=status, response=data)
+        self._run_log(path.strip("/"), payload, data)
         if status != 200:
             raise SimulatorTransportError(f"{path} HTTP {status}: {data}")
         if data.get("accepted") is not True:

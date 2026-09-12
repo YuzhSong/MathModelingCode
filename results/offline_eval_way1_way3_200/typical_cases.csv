@@ -1,6 +1,0 @@
-kind,seed,suite,version
-fast_vs_v6,10049,min_reff,way1
-slow_vs_v6,10048,collinear,way1
-fast_vs_v6,10026,collinear,way3
-slow_vs_v6,10033,min_reff,way3
-v6_leads_external,10048,min_reff,v6
