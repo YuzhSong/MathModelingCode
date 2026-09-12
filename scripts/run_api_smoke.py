@@ -10,7 +10,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from q3.api_client import RequestIdFactory, SimulatorClient
 from q3.logger import JsonlLogger
 from q3.models import Point
-from q3.safety import PRACTICE_CONFIRMATION, require_practice_confirmation
 
 
 def parse_args() -> argparse.Namespace:
@@ -23,10 +22,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--clear-x", type=float, default=0.0)
     parser.add_argument("--clear-y", type=float, default=0.0)
     parser.add_argument("--log", default="代码/logs/api_smoke.jsonl")
-    parser.add_argument(
-        "--confirm-practice",
-        help=f"Safety gate. Must equal {PRACTICE_CONFIRMATION!r} after confirming the simulator is in Q3 practice/simulation mode.",
-    )
     return parser.parse_args()
 
 
@@ -35,11 +30,6 @@ def main() -> int:
     if not args.robot_id:
         print("请通过 --robot-id 或环境变量 ROBOT_ID 指定当前登录参赛队号。", file=sys.stderr)
         return 2
-    try:
-        require_practice_confirmation(args.confirm_practice)
-    except RuntimeError as exc:
-        print(str(exc), file=sys.stderr)
-        return 3
 
     logger = JsonlLogger(Path(args.log))
     client = SimulatorClient(

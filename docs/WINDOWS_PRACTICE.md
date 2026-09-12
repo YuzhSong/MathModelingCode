@@ -30,16 +30,16 @@ python main.py --help
 确认演练模式后，在 Windows 命令行运行：
 
 ```text
-python main.py --mode official --strategy v6 --search-points-n 8 --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --confirm-practice Q3_PRACTICE_ONLY
+python main.py --mode official --strategy v6 --search-points-n 8 --robot-id YOUR_ID --base-url http://127.0.0.1:2026
 ```
 
 等价脚本入口：
 
 ```text
-python scripts/run_official_practice.py --strategy v6 --search-points-n 8 --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --confirm-practice Q3_PRACTICE_ONLY
+python scripts/run_official_practice.py --strategy v6 --search-points-n 8 --robot-id YOUR_ID --base-url http://127.0.0.1:2026
 ```
 
-程序只使用官方已有的 `/enter`、`/measure`、`/clear`、`/exit` 四个接口；没有 `/move`。没有 `Q3_PRACTICE_ONLY`，程序不会调用 `/enter`。
+程序只使用官方已有的 `/enter`、`/measure`、`/clear`、`/exit` 四个接口；没有 `/move`。
 
 ## 回退与边界
 

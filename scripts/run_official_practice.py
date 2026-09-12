@@ -11,11 +11,10 @@ from q3.api_client import RequestIdFactory, SimulatorClient
 from q3.logger import JsonlLogger
 from q3.planner import Q3BaselinePlanner, Q3Config
 from q3.run_logger import RunLogger, print_run_summary
-from q3.safety import PRACTICE_CONFIRMATION, require_practice_confirmation
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Q3 official practice runner (practice-gated).")
+    parser = argparse.ArgumentParser(description="Q3 official runner.")
     parser.add_argument(
         "--strategy",
         choices=("v3", "v4", "v6"),
@@ -28,10 +27,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--search-radius", type=float, default=1150.0, help="v3 baseline planner search ring radius.")
     parser.add_argument("--search-points-n", type=int, default=8, help="v4 outer ring point count.")
     parser.add_argument("--max-localization-measures", type=int, default=8, help="v3 baseline planner localization cap.")
-    parser.add_argument(
-        "--confirm-practice",
-        help=f"Safety gate. Must equal {PRACTICE_CONFIRMATION!r} after confirming the simulator is in Q3 practice/simulation mode.",
-    )
     return parser.parse_args()
 
 
@@ -40,11 +35,6 @@ def main() -> int:
     if not args.robot_id:
         print("请通过 --robot-id 或环境变量 ROBOT_ID 指定当前登录参赛队号。", file=sys.stderr)
         return 2
-    try:
-        require_practice_confirmation(args.confirm_practice)
-    except RuntimeError as exc:
-        print(str(exc), file=sys.stderr)
-        return 3
 
     logger = JsonlLogger(Path(args.log))
     run_logger = RunLogger(mode="practice", strategy=args.strategy)
