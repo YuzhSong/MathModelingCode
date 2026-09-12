@@ -18,3 +18,10 @@
 - Added V6 route-aware supplement generation without changing the frozen V4 router or official entry point.
 - Evaluated V4/V5-B/V6 on 200 identical offline practice cases each. V6 retained 100% clearance and improved aggregate mean/P95/max, but was not promoted because 12 paired cases regressed by more than 300 seconds.
 - Added an explicit, practice-gated official HTTP adapter for V6 and froze the portable `frozen/v6_n8_20260912/` snapshot. The default official entry remains V4; no official endpoint was called while preparing this snapshot.
+
+## 2026-09-13
+
+- Added run-level logging for official runs: `q3/run_logger.py` writes append-only `events.jsonl` (raw request/response per API call), `trajectory.csv` (per-position route with moved/cumulative distance), and per-run `summary.json`, plus a global `logs/q3/runs_summary.csv` row per finished run.
+- The logger is a passive observer hooked into `SimulatorClient._post`: it adds no API calls, never changes action order, records only API-visible information (no ground truth), and degrades to stderr warnings on write failure.
+- `source_count` starts as null (the official API never reveals it); backfill via `python main.py --update-source-count RUN_ID N` or `scripts/update_run_metadata.py`, which recomputes `clear_rate` and `avg_time_per_source_s`.
+- Practice/formal distinction is carried in the run id and summary `mode` field; the existing practice confirmation gate is unchanged and no logging code can trigger a formal test.
