@@ -2,6 +2,7 @@
 
 - `main.py`: unified command-line entry point.
 - `q3/`: API client, geometry, planner, policies, routing, logging, and safety gate.
+- `q4/`: Problem 4 W0-W5 policies, geometry, routing, diagnostics, and benchmarks. The current candidate is W5.
 - `q3/run_logger.py`: passive run logger for official runs; writes `logs/q3/<run_id>/{events.jsonl,trajectory.csv,summary.json}` and appends `logs/q3/runs_summary.csv`.
 - `scripts/run_official_practice.py`: official runner, defaulting to V4 and explicitly supporting V6.
 - `scripts/run_api_smoke.py`: minimal practice API smoke test; it calls `/enter` only after confirmation.

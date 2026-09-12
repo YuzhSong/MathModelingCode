@@ -25,6 +25,7 @@ SPEED_MPS = 5.0  # robot speed, same convention as offline_sim/engine.py
 
 RUNS_SUMMARY_FIELDS = [
     "run_id",
+    "problem",
     "mode",
     "strategy",
     "case_id",
@@ -65,12 +66,19 @@ def _now_iso() -> str:
 
 
 class RunLogger:
-    """Collects one official run into logs/q3/<run_id>/ plus a global CSV row."""
+    """Collects one official run into logs/<problem>/<run_id>/ plus a global CSV row."""
 
-    def __init__(self, base_dir: Path | str = Path("logs/q3"), mode: str = "practice", strategy: str | None = None):
+    def __init__(
+        self,
+        base_dir: Path | str = Path("logs/q3"),
+        mode: str = "practice",
+        strategy: str | None = None,
+        problem: int = 3,
+    ):
         self.base_dir = Path(base_dir)
         self.mode = mode
         self.strategy = strategy
+        self.problem = problem
         self.run_id: str | None = None
         self.run_dir: Path | None = None
         self.case_id: str | None = None
@@ -155,6 +163,7 @@ class RunLogger:
         total_virtual = self._last_virtual_time
         summary: dict[str, Any] = {
             "run_id": self.run_id,
+            "problem": self.problem,
             "mode": self.mode,
             "strategy": self.strategy,
             "case_id": self.case_id,
@@ -348,7 +357,7 @@ def print_run_summary(summary: dict[str, Any]) -> None:
     total_virtual = summary.get("total_virtual_time_s")
     avg = summary.get("avg_time_per_source_s")
     lines = [
-        "================ Q3 RUN SUMMARY ================",
+        f"================ Q{summary.get('problem', 3)} RUN SUMMARY ================",
         f"Run ID:          {summary.get('run_id')}",
         f"Mode:            {str(summary.get('mode')).upper()}",
         f"Strategy:        {summary.get('strategy') or 'N/A'}",

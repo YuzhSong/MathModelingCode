@@ -6,13 +6,15 @@ import sys
 from pathlib import Path
 
 
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Q3 unified entry point.")
+    parser = argparse.ArgumentParser(description="Q3/Q4 unified entry point (practice/offline only).")
+    parser.add_argument("--problem", choices=("3", "4"), default="3")
     parser.add_argument("--mode", choices=("official", "offline"), default="official")
     parser.add_argument(
         "--strategy",
         default="v4",
-        help="Strategy generation. Offline: v0-v4. Official: v4 (default), v6 (explicit practice candidate), or v3.",
+        help="Q3: v3/v4/v6. Q4: w5.",
     )
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"))
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))
@@ -47,6 +49,9 @@ def main() -> int:
     if args.mode == "offline":
         from scripts.run_offline_eval import main as offline_main
 
+        if args.problem != "3":
+            print("Q4 offline benchmark 请使用 q4/run_w5_benchmark.py；main.py 只提供官方 Q4 W5 入口。", file=sys.stderr)
+            return 2
         sys.argv = [sys.argv[0], "--versions", args.strategy]
         return offline_main()
 
@@ -55,6 +60,32 @@ def main() -> int:
     if not args.robot_id:
         print("未提供参赛队号, 已退出。", file=sys.stderr)
         return 2
+
+    if args.problem == "4":
+        if args.strategy != "w5":
+            print("Q4 官方模式当前只支持 --strategy w5。", file=sys.stderr)
+            return 2
+        from q3.api_client import RequestIdFactory, SimulatorClient
+        from q3.logger import JsonlLogger
+        from q3.run_logger import RunLogger, print_run_summary
+        from q3.offline_policy import OfficialClientRunnerAdapter
+        from q4.w5_policy import W5SymmetricDetectionPolicy
+
+        logger = JsonlLogger(Path(args.log.replace("q3_", "q4_")))
+        run_logger = RunLogger(base_dir="logs/q4", mode="practice", strategy="w5", problem=4)
+        client = SimulatorClient(
+            robot_id=args.robot_id,
+            base_url=args.base_url,
+            request_ids=RequestIdFactory("q4-w5"),
+            logger=logger,
+            run_logger=run_logger,
+        )
+        policy = W5SymmetricDetectionPolicy(OfficialClientRunnerAdapter(client))
+        policy.run()
+        print(f"Q4 W5 practice run complete; log: {logger.path.resolve()}")
+        if run_logger.summary:
+            print_run_summary(run_logger.summary)
+        return 0
 
     if args.strategy not in ("v3", "v4", "v6"):
         print("官方模式仅支持 --strategy v3、v4 或 v6。", file=sys.stderr)
