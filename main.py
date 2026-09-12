@@ -13,8 +13,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mode", choices=("official", "offline"), default="official")
     parser.add_argument(
         "--strategy",
-        default="v6",
-        help="Q3: v3/v4/v6 (default v6). Q4: w5.",
+        default=None,
+        help="Q3: v3/v4/v6 (default v6). Q4: w5 (default).",
     )
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"))
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))
@@ -26,7 +26,10 @@ def parse_args() -> argparse.Namespace:
         metavar=("RUN_ID", "COUNT"),
         help="Backfill the official source count of a finished run and recompute derived stats.",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.strategy is None:
+        args.strategy = "w5" if args.problem == "4" else "v6"
+    return args
 
 
 def prompt_missing_args(args: argparse.Namespace) -> None:
