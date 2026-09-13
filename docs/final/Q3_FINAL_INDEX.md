@@ -23,7 +23,7 @@ For `summary.csv`, the main columns are `mean_total_time_s`, `p95_total_time_s`,
 
 ## Historical and negative evidence
 
-Official formal summary (pending Windows merge): `official_results/q3/q3_formal_summary.csv`. It is intentionally not present in the current Mac checkout.
+Official formal summary: `official_results/q3/q3_formal_summary.csv` (3 rows; all case IDs and required table fields present; average-time formula validated).
 
 - V4/V5 evolution: `results/q3/offline_eval_v4_n8_n9/`, `offline_eval_v5_n8/`.
 - Stage-2/N1/N2/Minimax family: `results/q3/offline_eval_stage2_200/`, `offline_eval_stage2_mn_200/`, `offline_eval_stage2_analysis/`.

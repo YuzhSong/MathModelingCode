@@ -2,7 +2,7 @@
 
 ## Current status
 
-The Windows-prepared `official_results/` directory is not currently present in this Mac checkout. No official CSV or `.jlog` was fabricated or inferred from offline runs.
+The Windows-prepared `official_results/` directory is now present in this Mac checkout. It was pulled from the remote branch; no official CSV or `.jlog` was fabricated, edited, renamed or inferred from offline runs.
 
 Expected structure after the Windows materials are copied to the repository root:
 
@@ -33,4 +33,4 @@ avg_time_per_cleared_s = total_virtual_time_s / cleared_count
 
 Official encrypted `.jlog` files must remain byte-for-byte unchanged if retained locally. For a public GitHub repository, prefer committing the formal summaries, README files, and this index only; keep encrypted `.jlog` files in the local competition submission materials unless publication is explicitly required.
 
-Once copied, update this file with the exact formal row counts and paths. Do not mix official rows into offline CSVs.
+Validation completed: Q3 has exactly 3 formal rows and 3 formal `.jlog` files; Q4 has exactly 3 formal rows and 3 formal `.jlog` files. All required fields are present, all average-time identities pass, and all manifest file sizes/SHA-256 values match. Do not mix official rows into offline CSVs.

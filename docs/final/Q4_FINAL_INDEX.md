@@ -22,7 +22,7 @@ The final W6 overall row reports 200/200 full clear, zero clear failures, zero u
 
 ## Evolution and negative evidence
 
-Official formal summary (pending Windows merge): `official_results/q4/q4_formal_summary.csv`. It is intentionally not present in the current Mac checkout.
+Official formal summary: `official_results/q4/q4_formal_summary.csv` (3 rows; all case IDs and required table fields present; average-time formula validated).
 
 - W0--W4-A: `results/q4/w0_baseline/` through `results/q4/w4a/`.
 - W5 geometry selection: `results/q4/w5/`, `results/q4/w5_geometry/`.

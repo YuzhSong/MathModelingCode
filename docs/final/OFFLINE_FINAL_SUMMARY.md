@@ -49,4 +49,4 @@ Mean(T/N) is always the mean of per-case `T_i/N_i`; it is not `mean(T)/mean(N)`.
 
 ## Official-result boundary
 
-These are offline simulator results only. No official Q3/Q4 result file is currently merged into this Mac archive. When available, use `official_results/q3/q3_formal_summary.csv` and `official_results/q4/q4_formal_summary.csv`; do not infer formal values from `runs_summary.csv` or offline summaries.
+These are offline simulator results only. The completed official formal results are stored separately in `official_results/q3/q3_formal_summary.csv` and `official_results/q4/q4_formal_summary.csv`; do not infer formal values from `runs_summary.csv` or offline summaries.

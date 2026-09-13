@@ -18,7 +18,7 @@ historical_results_deleted: false
 4. [Q4_FINAL_INDEX.md](Q4_FINAL_INDEX.md)
 5. [REPRODUCIBILITY.md](REPRODUCIBILITY.md)
 
-正式测试数据单独索引于 [OFFICIAL_RESULTS_INDEX.md](OFFICIAL_RESULTS_INDEX.md)。当前 Mac checkout 尚未发现 Windows 整理好的 `official_results/`，因此正式结果暂未合并；离线结果与正式结果不得混用。
+正式测试数据单独索引于 [OFFICIAL_RESULTS_INDEX.md](OFFICIAL_RESULTS_INDEX.md)。Windows 正式结果已经合并到 `official_results/`；离线结果与正式结果仍严格分开。
 
 最终离线策略代码与入口：
 

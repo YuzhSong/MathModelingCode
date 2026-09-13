@@ -2,7 +2,7 @@
 
 论文手先使用本文件，再打开对应的 Q3/Q4 final index。所有链接均指向原始结果路径，避免复制和路径漂移。
 
-正式测试表与离线证据分开：Q3 正式表应使用 `official_results/q3/q3_formal_summary.csv`，Q4 正式表应使用 `official_results/q4/q4_formal_summary.csv`。当前这两个文件尚未出现在 Mac checkout；在合并前不要填写正式测试数值。
+正式测试表与离线证据分开：Q3 正式表使用 `official_results/q3/q3_formal_summary.csv`，Q4 正式表使用 `official_results/q4/q4_formal_summary.csv`。两份正式表各有 3 条记录，论文正式表不要从 offline summary 或 practice `runs_summary.csv` 推断。
 
 ## Q3 recommended
 
@@ -29,3 +29,12 @@
 | Q4 trajectory | `results/q4/` trajectory/trace artifacts where present | preserve action order and lifecycle endpoints | representative figure |
 
 Do not fabricate official results. Official Windows files, if later available, should be added as a separate clearly labeled source rather than mixed into these offline CSVs.
+
+### Official formal results
+
+| Problem | Exact source | Rows | Paper use |
+|---|---|---:|---|
+| Q3 | `official_results/q3/q3_formal_summary.csv` | 3 | official test table |
+| Q4 | `official_results/q4/q4_formal_summary.csv` | 3 | official test table |
+
+Required columns are `case_id`, `cleared_count`, `total_virtual_time_s`, `avg_time_per_cleared_s`, `program_real_time_s`, and `clear_fail_count`. The six encrypted `.jlog` files are listed with SHA-256 in `official_results/OFFICIAL_LOG_MANIFEST.csv`.

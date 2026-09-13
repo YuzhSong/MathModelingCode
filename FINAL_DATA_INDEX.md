@@ -27,8 +27,8 @@
 
 ## 4. 本地 summary CSV
 
-- Q3 formal：[`official_results/q3/q3_formal_summary.csv`](official_results/q3/q3_formal_summary.csv)
-- Q4 formal：[`official_results/q4/q4_formal_summary.csv`](official_results/q4/q4_formal_summary.csv)
+- Q3 formal：[`official_results/q3/q3_formal_summary.csv`](official_results/q3/q3_formal_summary.csv)，恰好 3 条正式测试记录
+- Q4 formal：[`official_results/q4/q4_formal_summary.csv`](official_results/q4/q4_formal_summary.csv)，恰好 3 条正式测试记录
 - 原始本地 practice 汇总副本：[`official_results/q3/practice/runs_summary.csv`](official_results/q3/practice/runs_summary.csv)、[`official_results/q4/practice/runs_summary.csv`](official_results/q4/practice/runs_summary.csv)
 
 两份 formal summary 的 `program_real_time_s` 使用 `/enter` 到 `/exit` 的真实程序运行时间；`avg_time_per_cleared_s` 按总虚拟时间除以清除数量重新计算。
