@@ -2,11 +2,43 @@
 
 当前 Q3 最终候选为 RARC（内部实现 frozen V6/n=8），Q4 最终冻结策略为 W6-25PFR。论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。
 
+## Final Competition Version
+
+本节是比赛最终提交与复现实验的唯一入口说明。历史版本和实验目录保留用于研究、审计与复现，不作为最终提交策略。
+
+### Q3
+
+- Final method: **RARC**（Route-Aware Rolling Coordination）。
+- Internal implementation: frozen **V6 / n=8**。
+- Final runner: [`run_q3_final.py`](run_q3_final.py)，固定调用 RARC/n=8，不暴露历史版本选择。
+- Official formal results: [`official_results/q3/formal/`](official_results/q3/formal/)。
+- Offline experiments: [`results/q3/`](results/q3/)，保留仓库原有历史目录，不覆盖。
+
+### Q4
+
+- Final method: **W6-25PFR**，论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。
+- Final runner: [`run_q4_final.py`](run_q4_final.py)，固定调用 W6-25PFR。
+- Official formal results: [`official_results/q4/formal/`](official_results/q4/formal/)。
+- Offline experiments: [`results/q4/`](results/q4/)，保留仓库原有历史目录，不覆盖。
+
+如果只想运行最终比赛代码，请使用：
+
+```text
+python run_q3_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind practice
+python run_q4_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind practice
+```
+
+历史 V0～V6、W0～W5、W6-A/W7/W8 及各类消融实验仅用于研究与复现，不是最终提交策略。
+
+最终数据索引见 [`FINAL_DATA_INDEX.md`](FINAL_DATA_INDEX.md)。
+
+Practice runs and formal runs are stored separately. Formal results are recorded only in dedicated formal summaries.
+
 ## 当前状态
 
 - Q3 正式冻结方案为 frozen V6/n=8；论文层名称为 Route-Aware Rolling Coordination (RARC)。V6 是内部实现标识，不改代码命名。V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
 - Q4 正式冻结方案为 W6-25PFR；论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。W0-W5、W6-A、W7、W8 仅作为历史演化、消融和鲁棒性证据。
-- 官方 HTTP 入口显式支持 V6；`--strategy v4` 可切回对照基线。运行前必须人工确认模拟器处于演练模式；正式测试不自动运行。
+- 官方 HTTP 入口显式支持 V6；`--strategy v4` 可切回对照基线。`main.py --mode official` 默认运行 V6/n=8。运行前必须人工确认模拟器处于演练模式；正式测试不自动运行。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
 
@@ -60,6 +92,7 @@ python run_q3_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --tes
 `CASE_CODE` 是模拟器界面显示的测试案例编码；接口通常不返回该字段，可以先留空，结束后从模拟器日志列表补记。本地日志会输出表 1 所需的“清除干扰源个数”“平均定位清除时间 = total_virtual_time_s / cleared_count”“程序运行时间 = exit.real_timestamp_ms - enter.real_timestamp_ms”。
 
 保留 `main.py --mode official --strategy v6` 作为开发入口，不建议正式填写表格时使用它。
+`main.py --mode official` 仍默认 V6/n=8；`--strategy v3` 可切回基线控制器，`--strategy v4` 可回退冻结 V4 官方客户端适配入口。
 
 ## Q4 官方演练/正式入口
 
