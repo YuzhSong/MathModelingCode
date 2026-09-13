@@ -1,5 +1,7 @@
 # Q4 Final Archive
 
+> Current combined offline archive: [`docs/final/README.md`](../final/README.md). The current authoritative Q4 final is W6-25PFR and its authoritative offline data is `results/q4/w6/feasible_region_full/`; this older archive is retained for history and is not the primary data index.
+
 ```yaml
 Final frozen policy: W6-25PFR
 Paper name: 25-Point Symmetric Search with Persistent Feasible-Region Clearing (25P-PFRC)

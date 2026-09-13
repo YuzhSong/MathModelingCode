@@ -1,22 +1,18 @@
 # Q3 Final Results Index
 
-## Final candidate
+Final candidate: `frozen V6 / n=8 == RARC`.
 
-- V6/RARC: `q3/offline_eval_v6_n8/` — [report](q3/offline_eval_v6_n8/report.md), `summary.csv`, `details.csv`, `source_diagnostics.csv`.
-- Final implementation: `q3/v6_policy.py`; immutable snapshot: `../frozen/v6_n8_20260912/`.
+| Material | Original path |
+|---|---|
+| Final report | `results/q3/offline_eval_v6_n8/report.md` |
+| Final aggregate/per-case data | `results/q3/offline_eval_v6_n8/summary.csv`, `details.csv` |
+| Route/source diagnostics | `results/q3/offline_eval_v6_n8/route_decisions.csv`, `source_diagnostics.csv` |
+| n=6..12 selection and N=10..16 curve | `results/q3/offline_eval_ring_count_200/` |
+| Stage-2 analysis | `results/q3/offline_eval_stage2_analysis/` |
+| L2 lookahead negative result | `results/q3/offline_eval_v6_l2_200/` |
+| Ring-only negative result | `results/offline_eval_ring_only_center_ablation_200/` |
+| no_signal negative/optional result | `results/offline_eval_v6_nosignal_200/` |
+| SEARCH-backbone bundle negative result | `results/offline_eval_v6_backbone_bundle_200/` |
+| Representative figures/timelines | final report and ring-count `figures/`/timeline artifacts |
 
-## Core selection and evolution
-
-- n=6..12: `q3/offline_eval_ring_count_200/` — `report.md`, `paired_vs_n8.csv`, `source_count_summary.csv`, `phase_summary.csv`.
-- V0–V3 early baselines: `q3/offline_eval_clean_v0_v3_n6_n9/`.
-- V4/V5 evolution: `q3/offline_eval_v4_n8_n9/`, `q3/offline_eval_v5_n8/`.
-- Stage-2 mechanism: `q3/offline_eval_stage2_analysis/` and its source `offline_eval_stage2_200/` family.
-
-## Negative and exploratory evidence
-
-- V6-L2: `q3/offline_eval_v6_l2_200/`.
-- Ring-only center ablation: `../offline_eval_ring_only_center_ablation_200/`.
-- Historical no_signal: `../offline_eval_v6_nosignal_200/`.
-- SEARCH-backbone + bundle: `../offline_eval_v6_backbone_bundle_200/`.
-
-All historical result paths remain unchanged. The archive docs under `docs/q3_final/` explain which files are paper-relevant.
+This is an index only; no result files were moved, merged or overwritten.

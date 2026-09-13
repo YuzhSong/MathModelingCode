@@ -1,5 +1,7 @@
 # Q4 Final Candidate
 
+> Authoritative current archive: [`docs/final/Q4_FINAL_INDEX.md`](../final/Q4_FINAL_INDEX.md). The current code and latest W6 report supersede any older W5/held-out comparison references below; historical reports themselves remain unchanged.
+
 ## Identity
 
 - Internal implementation: W6-25PFR

@@ -1,4 +1,14 @@
-# B题问题3代码
+# B题问题3/问题4代码
+
+## FINAL COMPETITION VERSION
+
+- Q3 final method: **RARC** (Route-Aware Rolling Coordination), internal implementation **frozen V6 / n=8**; final runner: `run_q3_final.py`.
+- Q4 final method: **25P-PFRC** (25-Point Symmetric Search with Persistent Feasible-Region Clearing), internal implementation **W6-25PFR**; final runner: `run_q4_final.py`.
+- 离线论文数据总入口：[docs/final/README.md](docs/final/README.md)。最终摘要见 [docs/final/OFFLINE_FINAL_SUMMARY.md](docs/final/OFFLINE_FINAL_SUMMARY.md)，结果索引见 [results/Q3_FINAL_INDEX.md](results/Q3_FINAL_INDEX.md) 和 [results/Q4_FINAL_INDEX.md](results/Q4_FINAL_INDEX.md)。
+- Official formal results: pending merge from Windows; after copying, use `official_results/q3/q3_formal_summary.csv` and `official_results/q4/q4_formal_summary.csv`. See [docs/final/OFFICIAL_RESULTS_INDEX.md](docs/final/OFFICIAL_RESULTS_INDEX.md). Do not infer formal values from offline runs.
+- Historical V0~V6 / W0~W8 and ablations are kept for reproducibility and are not final competition policies.
+
+本轮仅整理 Mac 上的离线实验、代码和论文支撑材料；没有运行新 benchmark、没有调用官方接口、没有删除历史结果。
 
 当前 Q3 最终候选为 RARC（内部实现 frozen V6/n=8），Q4 最终冻结策略为 W6-25PFR。论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。
 
