@@ -1,0 +1,6 @@
+channel,clear_time_s,cleared,coarse_probe_count,error_field,fallback_probe_count,first_found_time_s,found_to_clear_s,intersection_probe_count,kind,max_planned_step_m,mean_planned_step_m,reacquisition_attempts,reacquisition_move_m,reacquisition_no_signal,reacquisition_successes,reacquisition_switch_count,reacquisition_time_s,seed,strategy,suite,supplement_measure_count
+3,,0,0,smooth,0,17.0,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+10,,0,0,smooth,0,59.0,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+11,,0,97,smooth,0,65.0,,0,dir,500.0,500.0,97,612.7827736319628,0,97,0,607.5565547263925,2,w5pro,random,98
+13,,0,0,smooth,0,77.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+15,,0,0,smooth,0,89.0,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,1

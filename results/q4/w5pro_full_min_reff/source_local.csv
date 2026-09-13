@@ -1,0 +1,15 @@
+channel,clear_time_s,cleared,coarse_probe_count,fallback_probe_count,first_found_time_s,found_to_clear_s,intersection_probe_count,kind,max_planned_step_m,mean_planned_step_m,reacquisition_attempts,reacquisition_move_m,reacquisition_no_signal,reacquisition_successes,reacquisition_switch_count,reacquisition_time_s,seed,strategy,suite,supplement_measure_count
+1,,0,0,0,662.38152,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+2,,0,0,0,11.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+3,3807.108397,1,0,0,3070.092293,737.0161039999998,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+4,1203.151575,1,0,0,674.38152,528.7700550000001,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+5,6854.630086,1,0,0,29.0,6825.630086,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+6,6423.732495,1,0,0,976.38152,5447.350975,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+7,4810.881445,1,0,0,4266.886494,543.9949509999997,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+9,,0,0,0,4278.886494,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+10,6997.142225,1,0,0,3094.092293,3903.0499319999994,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+13,,0,0,0,379.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+14,4008.137417,1,0,0,1018.38152,2989.755897,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+16,6054.307935,1,0,0,2514.092293,3540.2156419999997,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+17,554.014078,1,0,0,101.0,453.01407800000004,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+19,5942.426424,1,0,0,2526.092293,3416.334131,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0

@@ -1,0 +1,27 @@
+{
+  "environment": "local offline_sim practice only",
+  "official_formal_test_run": false,
+  "n": 8,
+  "random_seeds": "0:10",
+  "stress_seeds": "10000:10005",
+  "route_cost_definition": "frozen V4 open-route travel length / 5 m/s",
+  "route_marginal_definition": "max(0, C_with_candidate - C_before); clamp removes heuristic non-monotonicity",
+  "objective": "route_marginal_s + 5s measure service + V5 fixed-sample expected future localization/clear cost",
+  "future_cost_approximation": "V5 visible-geometry outcome model with frozen V4-style fallback point; not full outcome rerouting",
+  "prediction_config": {
+    "sample_seed": 20260911,
+    "sample_count": 12,
+    "bearing_error_offsets_deg": [
+      -1.0,
+      0.0,
+      1.0
+    ],
+    "candidate_radii_m": [
+      500.0,
+      950.0
+    ],
+    "candidate_angle_step_deg": 30.0,
+    "lambda_alpha": null
+  },
+  "frozen_v4_equivalence": {}
+}

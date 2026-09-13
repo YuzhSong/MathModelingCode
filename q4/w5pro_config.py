@@ -18,11 +18,21 @@ class W5ProConfig:
     adaptive_scan: bool = False
     use_tail_rescue: bool = False
     use_intersection: bool = False
+    use_local_route_planner: bool = False
+    use_pareto_candidates: bool = False
+    local_route_horizon: int = 3
+    local_route_beam_width: int = 6
     risk_mode: str = "expected"
     cvar_alpha: float = 0.8
     outcome_mode: str = "robust"
     spatial_service_budget: int = 3
     max_macro_steps: int = 2000
+    clear_ready_route_max_s: float = 600.0
+    tail_budget_per_channel: int = 8
+    tail_budget_per_state: int = 3
+    exploration_efficiency_threshold: float = 0.02
+    information_reward_weight: float = 0.25
+    certificate_reward_weight: float = 0.25
 
     def __post_init__(self) -> None:
         if self.risk_mode not in {"expected", "cvar"}:
@@ -31,13 +41,18 @@ class W5ProConfig:
             raise ValueError("cvar_alpha must satisfy 0 <= alpha < 1")
         if self.outcome_mode not in {"robust", "expected"}:
             raise ValueError("outcome_mode must be 'robust' or 'expected'")
+        if self.clear_ready_route_max_s < 0 or self.tail_budget_per_channel < 0 or self.tail_budget_per_state < 0:
+            raise ValueError("budgets and clear-ready route threshold must be non-negative")
+        if self.local_route_horizon < 1 or self.local_route_beam_width < 1:
+            raise ValueError("local route horizon and beam width must be positive")
 
     @property
     def identity(self) -> bool:
         return not any(getattr(self, name) for name in (
             "use_hypothesis", "adaptive_backbone", "use_nbv", "use_task_pool",
             "use_wait_for_route", "use_spatial_stop", "use_future_cost",
-            "adaptive_scan", "use_tail_rescue", "use_intersection"))
+            "adaptive_scan", "use_tail_rescue", "use_intersection",
+            "use_local_route_planner", "use_pareto_candidates"))
 
 
 IDENTITY_CONFIG = W5ProConfig()
@@ -56,4 +71,6 @@ PRODUCTION_CONFIG = W5ProConfig(
     adaptive_scan=True,
     use_tail_rescue=True,
     use_intersection=True,
+    use_local_route_planner=False,
+    use_pareto_candidates=False,
 )

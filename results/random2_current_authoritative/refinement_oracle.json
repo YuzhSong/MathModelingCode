@@ -1,0 +1,11 @@
+{
+  "trace": "results\\random2_current_authoritative\\traces\\w5pro_random_smooth_2.json",
+  "selected_task_count": 73,
+  "actual_action_distance_m": 24249.814441990588,
+  "selected_task_path_distance_m": 23694.127695529824,
+  "oracle_task_path_distance_m": 13522.733789022855,
+  "oracle_saving_m": 10171.393906506968,
+  "oracle_saving_s_at_speed": 2034.2787813013936,
+  "actual_total_time_s": 5780.96289,
+  "warning": "diagnostic lower-bound style reorder; not an executable policy result"
+}

@@ -40,6 +40,17 @@ class W5ProSchedulerTests(unittest.TestCase):
         self.assertEqual(selected[0], 3)
         self.assertIn(3, selected)
 
+    def test_exploration_stops_below_competing_task_value(self):
+        session = AdaptiveScanSession()
+        self.assertTrue(session.should_stop_exploration(
+            uncertainty_gain=0.01, certificate_gain=0.0,
+            delta_time_s=1.0, competing_task_value=0.02,
+            threshold=0.02))
+        self.assertFalse(session.should_stop_exploration(
+            uncertainty_gain=0.05, certificate_gain=0.01,
+            delta_time_s=1.0, competing_task_value=0.02,
+            threshold=0.02))
+
 
 if __name__ == "__main__":
     unittest.main()

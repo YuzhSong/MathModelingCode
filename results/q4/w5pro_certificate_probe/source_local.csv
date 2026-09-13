@@ -1,0 +1,4 @@
+channel,clear_time_s,cleared,coarse_probe_count,fallback_probe_count,first_found_time_s,found_to_clear_s,intersection_probe_count,kind,max_planned_step_m,mean_planned_step_m,reacquisition_attempts,reacquisition_move_m,reacquisition_no_signal,reacquisition_successes,reacquisition_switch_count,reacquisition_time_s,seed,strategy,suite,supplement_measure_count
+2,,0,0,0,11.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+5,,0,0,0,29.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0
+17,,0,0,0,101.0,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,10000,w5pro,min_reff,0

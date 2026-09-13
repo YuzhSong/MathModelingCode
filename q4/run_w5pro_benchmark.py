@@ -60,6 +60,7 @@ def run_one(case, version: str, output: Path, suite: str, seed: int, field_kind:
         "w5pro_spatial_service", "w5pro_scan_continue",
         "w5pro_scan_observe", "w5pro_tail_fallback",
         "w5pro_no_progress_guard", "w5pro_route_choice",
+        "w5pro_route_marginal_candidates",
         "w5pro_route_repair", "w5pro_corridor_opportunity",
         "w5pro_information_ridge", "w5pro_information_ridge_selected",
         "w5pro_outcome_probabilities",

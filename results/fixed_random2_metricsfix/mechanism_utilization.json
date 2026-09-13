@@ -1,0 +1,20 @@
+{
+  "w5pro": {
+    "episodes": 1,
+    "event_nbv_selected": 50,
+    "event_intersection_attempt": 50,
+    "event_intersection_selected": 2,
+    "event_spatial_bundle": 569,
+    "event_spatial_service": 60,
+    "event_scan_continue": 180,
+    "event_scan_observe": 235,
+    "event_tail_fallback": 173,
+    "event_no_progress_guard": 0,
+    "event_route_choice": 109,
+    "event_route_repair": 85,
+    "event_corridor_opportunity": 125,
+    "event_information_ridge": 560,
+    "event_information_ridge_selected": 109,
+    "event_outcome_probabilities": 88
+  }
+}

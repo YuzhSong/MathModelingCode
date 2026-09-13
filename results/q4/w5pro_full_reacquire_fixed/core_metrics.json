@@ -1,0 +1,11 @@
+{
+  "w5pro": {
+    "source_total": 14,
+    "source_cleared": 14,
+    "clear_ratio": 1.0,
+    "total_localization_clear_time_s": 57330.08352099999,
+    "mean_localization_clear_time_s": 4095.005965785714,
+    "episode_total_time_s": 9369.707952,
+    "episode_time_per_cleared_source_s": 669.2648537142858
+  }
+}

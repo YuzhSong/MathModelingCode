@@ -1,0 +1,17 @@
+channel,clear_time_s,cleared,coarse_probe_count,error_field,fallback_probe_count,first_found_time_s,found_to_clear_s,intersection_probe_count,kind,max_planned_step_m,mean_planned_step_m,reacquisition_attempts,reacquisition_move_m,reacquisition_no_signal,reacquisition_successes,reacquisition_switch_count,reacquisition_time_s,seed,strategy,suite,supplement_measure_count
+1,2730.533414,1,0,smooth,0,2039.010204,691.5232100000001,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,2
+2,,0,12,smooth,0,325.0,,0,omni,500.0,270.8333333333333,23,4800.0,21,2,17,1092.0,2,w5pro,random,24
+3,,0,0,smooth,0,17.0,,0,omni,0.0,0.0,10,0.0,6,4,10,60.0,2,w5pro,random,11
+4,,0,0,smooth,0,3165.177925,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+5,,0,0,smooth,0,959.0,,0,omni,0.0,0.0,7,0.0,2,5,7,42.0,2,w5pro,random,8
+6,,0,0,smooth,0,4294.256244,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+10,,0,0,smooth,0,59.0,,0,omni,0.0,0.0,10,0.0,8,2,10,60.0,2,w5pro,random,11
+11,,0,0,smooth,0,65.0,,0,dir,0.0,0.0,10,0.0,8,2,10,60.0,2,w5pro,random,11
+12,6114.873466,1,9,smooth,0,367.0,5747.873466,0,dir,416.4428725856287,242.9250090082834,18,3410.2380551053325,17,1,16,788.0476110210665,2,w5pro,random,19
+13,,0,0,smooth,0,77.0,,0,dir,0.0,0.0,10,0.0,9,1,10,60.0,2,w5pro,random,11
+14,,0,0,smooth,0,4022.24604,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,0
+15,,0,0,smooth,0,89.0,,0,omni,0.0,0.0,10,0.0,9,1,10,60.0,2,w5pro,random,11
+16,3366.322641,1,0,smooth,0,2899.177925,467.14471600000024,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,1
+17,,0,558,smooth,0,385.0,,0,dir,500.0,415.19009583356063,567,111600.0,9,558,10,25165.0,2,w5pro,random,568
+19,,0,0,smooth,0,2093.010204,,0,dir,0.0,0.0,3,0.0,2,1,3,18.0,2,w5pro,random,4
+20,2705.64507,1,0,smooth,0,2099.010204,606.6348659999999,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,2,w5pro,random,2

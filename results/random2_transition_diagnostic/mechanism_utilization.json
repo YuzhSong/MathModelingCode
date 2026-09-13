@@ -1,0 +1,21 @@
+{
+  "w5pro": {
+    "episodes": 3,
+    "event_nbv_selected": 0,
+    "event_intersection_attempt": 12,
+    "event_intersection_selected": 0,
+    "event_spatial_bundle": 21,
+    "event_spatial_service": 12,
+    "event_scan_continue": 880,
+    "event_scan_observe": 863,
+    "event_tail_fallback": 209,
+    "event_no_progress_guard": 0,
+    "event_route_choice": 238,
+    "event_route_marginal_candidates": 238,
+    "event_route_repair": 114,
+    "event_corridor_opportunity": 222,
+    "event_information_ridge": 855,
+    "event_information_ridge_selected": 238,
+    "event_outcome_probabilities": 236
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "w5": {
+    "source_total": 95,
+    "source_cleared": 95,
+    "clear_ratio": 1.0,
+    "total_localization_clear_time_s": 207183.81042400002,
+    "mean_localization_clear_time_s": 2180.8822149894736,
+    "episode_total_time_s": 48877.384209,
+    "episode_time_per_cleared_source_s": 514.4987811473685
+  },
+  "w6a": {
+    "source_total": 95,
+    "source_cleared": 95,
+    "clear_ratio": 1.0,
+    "total_localization_clear_time_s": 203738.00475900003,
+    "mean_localization_clear_time_s": 2144.6105764105264,
+    "episode_total_time_s": 48354.757229,
+    "episode_time_per_cleared_source_s": 508.9974445157895
+  },
+  "w6b": {
+    "source_total": 95,
+    "source_cleared": 95,
+    "clear_ratio": 1.0,
+    "total_localization_clear_time_s": 209561.694318,
+    "mean_localization_clear_time_s": 2205.912571768421,
+    "episode_total_time_s": 48736.125089,
+    "episode_time_per_cleared_source_s": 513.0118430421053
+  },
+  "w6c": {
+    "source_total": 95,
+    "source_cleared": 95,
+    "clear_ratio": 1.0,
+    "total_localization_clear_time_s": 209015.89147700006,
+    "mean_localization_clear_time_s": 2200.167278705263,
+    "episode_total_time_s": 48435.562736,
+    "episode_time_per_cleared_source_s": 509.8480288
+  }
+}

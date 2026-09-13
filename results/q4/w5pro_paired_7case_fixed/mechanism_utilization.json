@@ -1,0 +1,38 @@
+{
+  "w5": {
+    "episodes": 7,
+    "event_nbv_selected": 0,
+    "event_intersection_attempt": 0,
+    "event_intersection_selected": 0,
+    "event_spatial_bundle": 0,
+    "event_spatial_service": 0,
+    "event_scan_continue": 0,
+    "event_scan_observe": 0,
+    "event_tail_fallback": 0,
+    "event_no_progress_guard": 0,
+    "event_route_choice": 0,
+    "event_route_repair": 0,
+    "event_corridor_opportunity": 0,
+    "event_information_ridge": 0,
+    "event_information_ridge_selected": 0,
+    "event_outcome_probabilities": 0
+  },
+  "w5pro": {
+    "episodes": 7,
+    "event_nbv_selected": 357,
+    "event_intersection_attempt": 357,
+    "event_intersection_selected": 242,
+    "event_spatial_bundle": 682,
+    "event_spatial_service": 34,
+    "event_scan_continue": 2923,
+    "event_scan_observe": 2998,
+    "event_tail_fallback": 2552,
+    "event_no_progress_guard": 0,
+    "event_route_choice": 599,
+    "event_route_repair": 599,
+    "event_corridor_opportunity": 569,
+    "event_information_ridge": 3814,
+    "event_information_ridge_selected": 598,
+    "event_outcome_probabilities": 357
+  }
+}

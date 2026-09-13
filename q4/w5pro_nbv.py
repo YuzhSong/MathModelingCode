@@ -48,6 +48,7 @@ def generate_candidates(current: Point, *, mec_center: Point | None = None,
                         route_points: Iterable[Point] = (),
                         previous_points: Iterable[Point] = (),
                         ring_radii: Sequence[float] = (400.0, 700.0, 1000.0, 1300.0),
+                        ring_angles: Sequence[float] = tuple(range(0, 360, 45)),
                         novelty_distance_m: float = 20.0) -> list[NBVCandidate]:
     candidates: list[NBVCandidate] = []
     if mec_center is not None:
@@ -55,7 +56,7 @@ def generate_candidates(current: Point, *, mec_center: Point | None = None,
     if region_centroid is not None:
         candidates.append(NBVCandidate(region_centroid, "region_centroid"))
     for radius in ring_radii:
-        for angle in range(0, 360, 45):
+        for angle in ring_angles:
             candidates.append(NBVCandidate(_offset(current, angle, radius), "ring", meta={"radius_m": radius}))
     if bearing_deg is not None:
         for angle in (bearing_deg + 90.0, bearing_deg - 90.0):

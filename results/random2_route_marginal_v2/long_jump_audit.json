@@ -1,0 +1,264 @@
+{
+  "trace": "results\\random2_route_marginal_v2\\traces\\w5pro_random_smooth_2.json",
+  "threshold_m": 500.0,
+  "measure_actions": 148,
+  "long_jump_count": 17,
+  "long_jumps": [
+    {
+      "action_index": 20,
+      "channel": 15,
+      "distance_m": 767.35044482085,
+      "from": [
+        0.0,
+        0.0
+      ],
+      "to": [
+        -363.71850886686025,
+        -675.67414592718
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 40,
+      "channel": 10,
+      "distance_m": 842.9160530673072,
+      "from": [
+        -81.18721019868009,
+        -1135.5286151289647
+      ],
+      "to": [
+        -663.5696073913484,
+        -526.1533481885608
+      ],
+      "previous_action": "measure",
+      "previous_channel": 13
+    },
+    {
+      "action_index": 44,
+      "channel": 11,
+      "distance_m": 1076.1753414261882,
+      "from": [
+        -659.5922018573035,
+        -1023.0326223869432
+      ],
+      "to": [
+        -952.755178744081,
+        12.442550891805826
+      ],
+      "previous_action": "clear",
+      "previous_channel": 10
+    },
+    {
+      "action_index": 48,
+      "channel": 3,
+      "distance_m": 908.9252481164924,
+      "from": [
+        -951.8503688053253,
+        12.292516837197482
+      ],
+      "to": [
+        -414.54509066591675,
+        745.4010659260484
+      ],
+      "previous_action": "clear",
+      "previous_channel": 11
+    },
+    {
+      "action_index": 50,
+      "channel": 13,
+      "distance_m": 1891.9060855769,
+      "from": [
+        92.60863135172549,
+        750.5250553210733
+      ],
+      "to": [
+        -81.9512861641545,
+        -1133.3107846182133
+      ],
+      "previous_action": "clear",
+      "previous_channel": 3
+    },
+    {
+      "action_index": 67,
+      "channel": 16,
+      "distance_m": 530.7902466714597,
+      "from": [
+        -485.00000000000045,
+        -840.0446416709053
+      ],
+      "to": [
+        -786.4092654785077,
+        -1276.9550908996412
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 69,
+      "channel": 4,
+      "distance_m": 1153.8037593855204,
+      "from": [
+        -959.4744112125754,
+        -851.5170618870043
+      ],
+      "to": [
+        76.21018807851803,
+        -1360.064528662139
+      ],
+      "previous_action": "clear",
+      "previous_channel": 16
+    },
+    {
+      "action_index": 70,
+      "channel": 4,
+      "distance_m": 723.9046633491804,
+      "from": [
+        76.21018807851803,
+        -1360.064528662139
+      ],
+      "to": [
+        746.0334083313993,
+        -1634.6092704233872
+      ],
+      "previous_action": "measure",
+      "previous_channel": 4
+    },
+    {
+      "action_index": 85,
+      "channel": 6,
+      "distance_m": 844.4075224146163,
+      "from": [
+        970.0000000000002,
+        -1680.0892833418109
+      ],
+      "to": [
+        827.1896786702105,
+        -847.8457636721934
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 99,
+      "channel": 1,
+      "distance_m": 640.1141493559172,
+      "from": [
+        785.657734576702,
+        -1405.1561800815584
+      ],
+      "to": [
+        485.0000000000001,
+        -840.0446416709054
+      ],
+      "previous_action": "clear",
+      "previous_channel": 14
+    },
+    {
+      "action_index": 108,
+      "channel": 12,
+      "distance_m": 783.1517057886263,
+      "from": [
+        485.0000000000001,
+        -840.0446416709054
+      ],
+      "to": [
+        855.9146000053312,
+        -150.29906989641387
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 109,
+      "channel": 12,
+      "distance_m": 500.28575086646845,
+      "from": [
+        855.9146000053312,
+        -150.29906989641387
+      ],
+      "to": [
+        1229.8440639506337,
+        182.0600559202317
+      ],
+      "previous_action": "measure",
+      "previous_channel": 12
+    },
+    {
+      "action_index": 119,
+      "channel": 1,
+      "distance_m": 969.9999999999999,
+      "from": [
+        970.0,
+        0.0
+      ],
+      "to": [
+        485.0000000000001,
+        840.0446416709054
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 127,
+      "channel": 1,
+      "distance_m": 969.9999999999999,
+      "from": [
+        485.0000000000001,
+        840.0446416709054
+      ],
+      "to": [
+        -484.9999999999998,
+        840.0446416709055
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 135,
+      "channel": 5,
+      "distance_m": 750.8271061095529,
+      "from": [
+        -484.9999999999998,
+        840.0446416709055
+      ],
+      "to": [
+        -1011.768664033104,
+        305.0155603476334
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 145,
+      "channel": 20,
+      "distance_m": 750.4017745078283,
+      "from": [
+        -1455.0,
+        840.0446416709053
+      ],
+      "to": [
+        -1528.5522360354844,
+        93.25625681300056
+      ],
+      "previous_action": "measure",
+      "previous_channel": 20
+    },
+    {
+      "action_index": 151,
+      "channel": 19,
+      "distance_m": 855.6349729990424,
+      "from": [
+        -1568.643121107812,
+        199.08444008440244
+      ],
+      "to": [
+        -748.1910004544873,
+        -43.75197550134587
+      ],
+      "previous_action": "clear",
+      "previous_channel": 1
+    }
+  ],
+  "route_marginal_event_count": 52
+}

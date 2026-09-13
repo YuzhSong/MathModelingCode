@@ -61,6 +61,10 @@ class HypothesisGrid:
         self._directional: dict[int, dict[int, set[int]]] = {}
         self._guaranteed_cache: dict[tuple[float, float], frozenset[int]] = {}
         self._directional_no_signal_cache: dict[tuple[float, float], dict[int, frozenset[int]]] = {}
+        self._visible_cache: dict[tuple[int, float, float, float], float] = {}
+
+    def _invalidate_visibility(self) -> None:
+        self._visible_cache.clear()
 
     def add_channel(self, channel: int) -> None:
         # Do not use setdefault here: its default expression is evaluated on
@@ -110,6 +114,7 @@ class HypothesisGrid:
             self._directional_no_signal_cache[key] = directional_masks
         for h, alive in directional.items():
             alive.difference_update(directional_masks[h])
+        self._invalidate_visibility()
 
     def update_bearing(self, channel: int, q: Point, bearing_deg: float,
                        bearing_tolerance_deg: float = 1.0, upper_range_m: float = 1500.0) -> None:
@@ -136,6 +141,7 @@ class HypothesisGrid:
                 heading_delta = np.abs((source_heading - heading + 180.0) % 360.0 - 180.0)
                 keep = np.any(distance_ok & bearing_ok & (heading_delta <= 90.0 + 1e-9), axis=1)
                 alive.intersection_update(np.flatnonzero(keep).tolist())
+            self._invalidate_visibility()
             return
         omni = self._omni[channel]
         directional = self._directional[channel]
@@ -152,12 +158,14 @@ class HypothesisGrid:
                            _angle_diff(math.degrees(math.atan2(p.y-q.y, p.x-q.x)), bearing_deg) <= bearing_tolerance_deg + 1e-9
                            and _heading_covers(p, q, heading) for p in cell.corners):
                     alive.remove(i)
+        self._invalidate_visibility()
 
     def update_near(self, channel: int, q: Point, radius_m: float = 5.0) -> None:
         self.add_channel(channel)
         for alive in [self._omni[channel], *self._directional[channel].values()]:
             alive.intersection_update(i for i, cell in enumerate(self.cells)
                                       if min(math.hypot(p.x-q.x, p.y-q.y) for p in cell.corners) <= radius_m + cell.half * math.sqrt(2.0))
+        self._invalidate_visibility()
 
     def directional_entropy(self, channel: int) -> float:
         self.add_channel(channel)
@@ -169,12 +177,35 @@ class HypothesisGrid:
 
     def visible_fraction(self, channel: int, q: Point, upper_range_m: float = 1500.0) -> float:
         self.add_channel(channel)
+        key = (int(channel), round(q.x, 6), round(q.y, 6), round(upper_range_m, 6))
+        if key in self._visible_cache:
+            return self._visible_cache[key]
         alive = self._directional[channel]
         total = sum(len(v) for v in alive.values())
-        visible = sum(1 for h, cells in alive.items() for i in cells
-                      if any(math.hypot(p.x-q.x, p.y-q.y) <= upper_range_m and
-                             _heading_covers(p, q, h*360.0/self.heading_bins) for p in self.cells[i].corners))
-        return visible / total if total else 0.0
+        visible = 0
+        if np is not None and total:
+            corner_xy = np.asarray([[(p.x, p.y) for p in cell.corners]
+                                    for cell in self.cells], dtype=float)
+            dx = corner_xy[:, :, 0] - q.x
+            dy = corner_xy[:, :, 1] - q.y
+            distance_ok = np.hypot(dx, dy) <= upper_range_m + 1e-9
+            # Source-to-observer bearing for each cell corner.
+            source_heading = np.degrees(np.arctan2(-dy, -dx))
+            for h, cells in alive.items():
+                if not cells:
+                    continue
+                indexes = np.fromiter(cells, dtype=int)
+                heading = h * 360.0 / self.heading_bins
+                delta = np.abs((source_heading[indexes] - heading + 180.0) % 360.0 - 180.0)
+                visible += int(np.count_nonzero(np.any(
+                    distance_ok[indexes] & (delta <= 90.0 + 1e-9), axis=1)))
+        else:
+            visible = sum(1 for h, cells in alive.items() for i in cells
+                          if any(math.hypot(p.x-q.x, p.y-q.y) <= upper_range_m and
+                                 _heading_covers(p, q, h*360.0/self.heading_bins) for p in self.cells[i].corners))
+        value = visible / total if total else 0.0
+        self._visible_cache[key] = value
+        return value
 
     def guaranteed_elimination_gain(self, channel: int, q: Point) -> int:
         """Number of currently alive omni hypotheses safely eliminated by NO_SIGNAL."""

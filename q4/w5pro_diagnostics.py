@@ -44,8 +44,18 @@ class PlannerDiagnostics:
 
 
 def collect_diagnostics(events: Iterable[dict], decisions: int | None = None) -> PlannerDiagnostics:
+    events = list(events)
     counter = Counter(str(e.get("event", "")) for e in events)
     counts = {field: counter.get(event, 0) for field, event in EVENT_FIELDS.items()}
+    counts["nbv_effective_count"] = sum(
+        1 for e in events if e.get("event") == "w5pro_nbv_effective"
+        and e.get("applied") is True)
+    counts["intersection_selected_count"] = sum(
+        1 for e in events if e.get("event") == "w5pro_intersection_selected"
+        and e.get("applied") is True)
+    counts["route_repair_count"] = sum(
+        1 for e in events if e.get("event") == "w5pro_route_repair"
+        and e.get("repair_needed") is True)
     if decisions is None:
         decisions = counter.get("w5pro_selected_task", 0) or counter.get("w4a_selected_task", 0)
     # The runtime event is named tail_fallback; retain the legacy tail_rescue

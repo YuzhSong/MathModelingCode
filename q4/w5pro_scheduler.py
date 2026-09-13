@@ -73,19 +73,54 @@ class AdaptiveScanSession:
     def should_stop_optional(self, positive_voi: bool, hard_required: bool = False) -> bool:
         return not positive_voi and not hard_required
 
+    @staticmethod
+    def exploration_efficiency(*, uncertainty_gain: float,
+                               certificate_gain: float,
+                               delta_time_s: float) -> float:
+        """Return marginal exploration value per mission second."""
+        if delta_time_s <= 0:
+            raise ValueError("delta_time_s must be positive")
+        return (max(0.0, float(uncertainty_gain)) +
+                max(0.0, float(certificate_gain))) / float(delta_time_s)
+
+    def should_stop_exploration(self, *, uncertainty_gain: float,
+                                certificate_gain: float, delta_time_s: float,
+                                competing_task_value: float,
+                                threshold: float = 0.02) -> bool:
+        """Stop optional backbone growth when its marginal value loses."""
+        marginal = self.exploration_efficiency(
+            uncertainty_gain=uncertainty_gain,
+            certificate_gain=certificate_gain,
+            delta_time_s=delta_time_s)
+        return marginal < max(float(threshold), float(competing_task_value))
+
 
 class AdaptiveScanScheduler:
-    def __init__(self, early_cap: int = 20, mid_cap: int = 6, starvation_age_s: float = 3000.0):
+    def __init__(self, early_cap: int = 20, mid_cap: int = 6,
+                 starvation_age_s: float = 3000.0, early_backbone_points: int = 8):
         self.early_cap = early_cap
         self.mid_cap = mid_cap
         self.starvation_age_s = starvation_age_s
+        self.early_backbone_points = early_backbone_points
         self.mode = ScanMode.EARLY
         self.must_include: set[int] = set()
         self.scan_log: list[dict] = []
 
-    def update_mode(self, *, discovered: int, hard_complete: bool, backlog: BacklogState) -> ScanMode:
+    def update_mode(self, *, discovered: int, hard_complete: bool, backlog: BacklogState,
+                    backbone_step: int | None = None) -> ScanMode:
         if hard_complete:
             self.mode = ScanMode.VERIFICATION
+        elif backbone_step is not None and backbone_step < self.early_backbone_points:
+            # Preserve the W5 contract: early backbone points scan all active
+            # channels; pruning begins only after the early phase.
+            self.mode = ScanMode.EARLY
+        elif discovered < 16:
+            # Do not throttle discovery while the documented source upper
+            # bound has not been reached; partial channel scans create extra
+            # backbone points compared with the frozen W5 contract.
+            self.mode = ScanMode.EARLY
+        elif backbone_step is not None:
+            self.mode = ScanMode.MID
         elif discovered == 0 and backlog.pressure < 1.0:
             self.mode = ScanMode.EARLY
         else:

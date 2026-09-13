@@ -1,0 +1,9 @@
+channel,clear_time_s,cleared,coarse_probe_count,error_field,fallback_probe_count,first_found_time_s,found_to_clear_s,intersection_probe_count,kind,max_planned_step_m,mean_planned_step_m,reacquisition_attempts,reacquisition_move_m,reacquisition_no_signal,reacquisition_successes,reacquisition_switch_count,reacquisition_time_s,seed,strategy,suite,supplement_measure_count
+1,,0,0,smooth,0,5.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+2,,0,0,smooth,0,11.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+5,,0,0,smooth,0,29.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+7,,0,0,smooth,0,41.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+9,,0,0,smooth,0,53.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+10,,0,0,smooth,0,59.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+16,,0,0,smooth,0,95.0,,0,dir,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0
+20,,0,0,smooth,0,119.0,,0,omni,0.0,0.0,0,0.0,0,0,0,0.0,0,w5pro,dir_boundary,0

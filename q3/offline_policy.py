@@ -303,6 +303,7 @@ class RouteOptimizedPolicy:
         offsets = [0.0, 250.0, 500.0, 750.0, 950.0]
         angles = [math.radians(15.0 * k) for k in range(24)]
         candidates: list[Point] = []
+        current = self.client.current_position
         for radius in offsets:
             if radius == 0.0:
                 candidates.append(center)
@@ -325,6 +326,35 @@ class RouteOptimizedPolicy:
                 best_score = score
                 best_point = point
         return best_point or center
+
+    def localization_pareto_candidates(self, track: SourceTrack, limit: int = 3) -> list[Point]:
+        """Return geometry-valid travel/information Pareto candidates."""
+        region, circle = self.localization_state(track)
+        if not region or circle is None or limit < 1:
+            return []
+        center = circle.center if math.isfinite(circle.radius) else polygon_centroid(region)
+        current = self.client.current_position
+        angles = [math.radians(15.0 * k) for k in range(24)]
+        candidates = [center]
+        for radius in (250.0, 500.0, 750.0, 950.0):
+            candidates.extend(Point(center.x + radius * math.cos(a), center.y + radius * math.sin(a)) for a in angles)
+        scored = []
+        for point in candidates:
+            if max_distance_to_vertices(point, region) > 995.0:
+                continue
+            quality = Q3BaselinePlanner.crossing_quality(track, point, center)
+            travel = distance(current, point)
+            if any(distance(point, m.position) < 10.0 for m in track.direction_measurements):
+                quality -= 1.0
+            scored.append((travel, quality, point))
+        front = []
+        for item in sorted(scored, key=lambda row: (row[0], -row[1])):
+            if any(other[0] <= item[0] and other[1] >= item[1]
+                   and (other[0] < item[0] or other[1] > item[1]) for other in scored):
+                continue
+            if all(distance(item[2], existing[2]) >= 20.0 for existing in front):
+                front.append(item)
+        return [row[2] for row in sorted(front, key=lambda row: (-row[1], row[0]))[:limit]]
 
 
 def route_length(start: Point, tasks: list[Task]) -> float:
