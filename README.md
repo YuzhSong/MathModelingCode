@@ -1,11 +1,11 @@
 # B题问题3代码
 
-当前仓库只实现问题3全向干扰源；不实现问题4。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。
+当前仓库只实现问题3全向干扰源；不实现问题4。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。Q3 最终归档入口见 [docs/q3_final/README.md](docs/q3_final/README.md)。
 
 ## 当前状态
 
-- 离线最终候选为 V6/n=8；V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
-- 官方 HTTP 入口默认 V6（`main.py --mode official` 即跑 v6）；`--strategy v4` 可切回冻结基线。确认门（Q3_PRACTICE_ONLY）已按队伍决定移除，运行前请自行确认模拟器处于演练模式。
+- Q3 正式冻结方案为 frozen V6/n=8；论文层名称为 Route-Aware Rolling Coordination (RARC)。V6 是内部实现标识，不改代码命名。V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
+- 官方 HTTP 入口显式支持 V6；`--strategy v4` 可切回对照基线。运行前必须人工确认模拟器处于演练模式；正式测试不自动运行。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
 
@@ -40,7 +40,7 @@ V6 route-aware 补测任务生成实验：
 python scripts/run_v6_eval.py --versions v4,v5b,v6 --random-seeds 0:100 --stress-seeds 10000:10050 --out-dir results/offline_eval_v6_n8
 ```
 
-V6 结果见 `results/offline_eval_v6_n8/report.md`。V6 保持 100% 清除并改善聚合均值/P95/max，但仍有 12/200 个同 seed case 比 V4 慢超过 300s，因此不替换默认的冻结 V4/n=8；它只作为显式选择的官方演练候选，不会自动运行。
+V6 结果见 `results/q3/offline_eval_v6_n8/report.md`。它是当前 Q3 final candidate；完整历史实验（包括失败消融）见 `docs/q3_final/EXPERIMENT_INDEX.md`，不要把历史负结果删除或覆盖。
 
 ## 官方演练 API
 

@@ -1,0 +1,32 @@
+category,path,description,final_candidate_related,paper_relevance,experiment,status,keep,safe_to_archive,notes
+FINAL_CORE,q3/v6_policy.py,V6 route-aware policy implementation,yes,main,V6,FINAL_CORE,yes,no,retain internal V6 name
+FINAL_CORE,q3/v5_policy.py,V4 diagnostics and V5 policy lineage,yes,main/ablation,V4-V5,CORE_EXPERIMENT,yes,no,shared final support
+FINAL_CORE,q3/v5_prediction.py,Frozen visible-geometry prediction primitives,yes,methods,V5-V6,FINAL_CORE,yes,no,hash-pinned
+FINAL_CORE,q3/offline_policy.py,core task state and policy V0-V4,yes,methods,V0-V4,FINAL_CORE,yes,no,shared foundation
+FINAL_CORE,q3/geometry.py,feasible regions and MEC,yes,methods,all,FINAL_CORE,yes,no,hash-pinned
+FINAL_CORE,q3/planner.py,search geometry and baseline planner,yes,methods,all,FINAL_CORE,yes,no,hash-pinned
+FINAL_CORE,q3/routing.py,frozen open-route heuristic,yes,methods,V4-V6,FINAL_CORE,yes,no,hash-pinned
+FROZEN,frozen/v6_n8_20260912/,immutable final V6 snapshot,yes,main,V6,FROZEN,yes,no,do not edit
+FROZEN,frozen/v4_n8_20260911/,immutable V4 snapshot,no,comparison,V4,FROZEN,yes,no,do not edit
+CORE_EXPERIMENT,scripts/run_v6_eval.py,final V6 offline evaluator,yes,main,V6,FINAL_BENCHMARK,yes,no,local offline_sim only
+CORE_EXPERIMENT,scripts/run_ring_count_eval.py,n sensitivity evaluator,yes,main,ring-count,CORE_EXPERIMENT,yes,no,selection evidence
+CORE_EXPERIMENT,results/q3/offline_eval_v6_n8/,final V6 200-case result set,yes,main,V6,FINAL_CORE,yes,no,retain paths
+CORE_EXPERIMENT,results/q3/offline_eval_ring_count_200/,n sensitivity result set,yes,main,ring-count,CORE_EXPERIMENT,yes,no,retain paths
+CORE_EXPERIMENT,results/q3/offline_eval_v4_n8_n9/,V4 comparison results,yes,main,V4,CORE_EXPERIMENT,yes,no,retain paths
+CORE_EXPERIMENT,results/q3/offline_eval_v5_n8/,V5 comparison results,yes,ablation,V5,CORE_EXPERIMENT,yes,no,retain paths
+ABLATION,results/q3/offline_eval_stage2_analysis/,stage2 analysis and decomposition,no,supplement,stage2,ABLATION,yes,no,retain historical reports
+NEGATIVE_RESULT,q3/v6_l2_policy.py,deep lookahead policy,no,supplement,V6-L2,NEGATIVE_RESULT,yes,yes,do not delete
+NEGATIVE_RESULT,q3/ring_only_policy.py,center ablation policy,no,optional,ring-only,NEGATIVE_RESULT,yes,yes,do not delete
+NEGATIVE_RESULT,q3/v6_nosignal_policy.py,no_signal policy,no,optional,no_signal,NEGATIVE_RESULT,yes,yes,do not delete
+NEGATIVE_RESULT,q3/v6_backbone_policy.py,SEARCH backbone bundle policy,no,supplement,backbone,NEGATIVE_RESULT,yes,yes,do not delete
+NEGATIVE_RESULT,results/offline_eval_ring_only_center_ablation_200/,ring-only full results,no,optional,ring-only,NEGATIVE_RESULT,yes,yes,original path preserved
+NEGATIVE_RESULT,results/offline_eval_v6_nosignal_200/,no_signal full results,no,optional,no_signal,NEGATIVE_RESULT,yes,yes,original path preserved
+NEGATIVE_RESULT,results/offline_eval_v6_backbone_bundle_200/,backbone full results and trajectories,no,supplement,backbone,NEGATIVE_RESULT,yes,yes,original path preserved
+OFFICIAL_PRACTICE,main.py,Q3 official adapter entry,no,procedure,official practice,OFFICIAL_PRACTICE,yes,no,no raw result found
+OFFICIAL_PRACTICE,scripts/run_official_practice.py,practice runner,no,procedure,official practice,OFFICIAL_PRACTICE,yes,no,never formal test
+SIMULATOR,offline_sim/,local API-shaped simulator,no,methods,all,FINAL_SUPPORT,yes,no,never modify physics
+GOVERNANCE,docs/q3_final/,final archive documentation,yes,main,archive,GOVERNANCE,yes,no,new archive layer
+GOVERNANCE,results/Q3_FINAL_INDEX.md,results pointer index,yes,main,archive,GOVERNANCE,yes,no,new index only
+DEVELOPMENT,q4/,separate Q4 work,no,no,Q4,OUT_OF_SCOPE,yes,no,not part of Q3
+DEBUG,logs/,runtime logs and possible temporary artifacts,no,no,official practice,DEBUG,yes,yes,do not treat as official evidence
+DEBUG,**/__pycache__/,generated caches,no,no,all,DEBUG,yes,yes,recorded only; not mass-deleted
