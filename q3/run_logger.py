@@ -34,6 +34,7 @@ RUNS_SUMMARY_FIELDS = [
     "clear_rate",
     "total_virtual_time_s",
     "avg_time_per_source_s",
+    "avg_time_per_cleared_s",
     "total_movement_distance_m",
     "movement_time_s",
     "measure_count",
@@ -41,6 +42,7 @@ RUNS_SUMMARY_FIELDS = [
     "clear_attempt_count",
     "clear_success_count",
     "clear_fail_count",
+    "program_real_time_s",
     "program_wall_time_s",
 ]
 
@@ -74,6 +76,7 @@ class RunLogger:
         mode: str = "practice",
         strategy: str | None = None,
         problem: int = 3,
+        case_id: str | None = None,
     ):
         self.base_dir = Path(base_dir)
         self.mode = mode
@@ -81,7 +84,7 @@ class RunLogger:
         self.problem = problem
         self.run_id: str | None = None
         self.run_dir: Path | None = None
-        self.case_id: str | None = None
+        self.case_id: str | None = case_id
         self.summary: dict[str, Any] | None = None
 
         self._pending_events: list[dict[str, Any]] = []
@@ -94,6 +97,8 @@ class RunLogger:
         self._end_wall: float | None = None
         self._start_iso = _now_iso()
         self._end_iso: str | None = None
+        self._enter_real_timestamp_ms: float | None = None
+        self._exit_real_timestamp_ms: float | None = None
 
         self._last_position: tuple[float, float] | None = None
         self._current_channel = 1  # simulator powers up on channel 1
@@ -132,11 +137,12 @@ class RunLogger:
         now = datetime.now().astimezone()
         self.run_id = self._next_run_id(now)
         self.run_dir = self.base_dir / self.run_id
-        for key in _CASE_ID_KEYS:
-            value = enter_response.get(key)
-            if value not in (None, ""):
-                self.case_id = str(value)
-                break
+        if self.case_id is None:
+            for key in _CASE_ID_KEYS:
+                value = enter_response.get(key)
+                if value not in (None, ""):
+                    self.case_id = str(value)
+                    break
         try:
             self.run_dir.mkdir(parents=True, exist_ok=True)
             self._events_fh = (self.run_dir / "events.jsonl").open("a", encoding="utf-8")
@@ -161,8 +167,12 @@ class RunLogger:
         self._end_iso = _now_iso()
         cleared = self._clear_success
         total_virtual = self._last_virtual_time
+        program_real_time = None
+        if self._enter_real_timestamp_ms is not None and self._exit_real_timestamp_ms is not None:
+            program_real_time = (self._exit_real_timestamp_ms - self._enter_real_timestamp_ms) / 1000.0
         summary: dict[str, Any] = {
             "run_id": self.run_id,
+            "run_dir": str(self.run_dir),
             "problem": self.problem,
             "mode": self.mode,
             "strategy": self.strategy,
@@ -185,6 +195,9 @@ class RunLogger:
             "clear_attempt_count": self._clear_attempt,
             "clear_success_count": self._clear_success,
             "clear_fail_count": self._clear_fail,
+            "enter_real_timestamp_ms": self._enter_real_timestamp_ms,
+            "exit_real_timestamp_ms": self._exit_real_timestamp_ms,
+            "program_real_time_s": program_real_time,
             "program_wall_time_s": (self._end_wall - self._start_wall),
         }
         self.summary = summary
@@ -258,7 +271,10 @@ class RunLogger:
             event["error"] = error
 
         if action == "enter" and accepted is True and self.run_dir is None:
+            self._enter_real_timestamp_ms = _as_float(response.get("real_timestamp_ms") if isinstance(response, dict) else None)
             self.begin_run(response or {})
+        elif action == "exit" and accepted is True:
+            self._exit_real_timestamp_ms = _as_float(response.get("real_timestamp_ms") if isinstance(response, dict) else None)
         if self.run_dir is None:
             self._pending_events.append(event)
             return
@@ -356,6 +372,7 @@ def print_run_summary(summary: dict[str, Any]) -> None:
     source = summary.get("source_count")
     total_virtual = summary.get("total_virtual_time_s")
     avg = summary.get("avg_time_per_source_s")
+    avg_cleared = summary.get("avg_time_per_cleared_s")
     lines = [
         f"================ Q{summary.get('problem', 3)} RUN SUMMARY ================",
         f"Run ID:          {summary.get('run_id')}",
@@ -368,7 +385,10 @@ def print_run_summary(summary: dict[str, Any]) -> None:
         f"Clear rate:      {format_percent(summary.get('clear_rate'))}",
         "",
         f"Virtual time:    {format_seconds(total_virtual)}",
-        f"Avg/source:      {format_seconds(avg)}{'' if avg is None else ' s/source'}",
+        f"Avg/source:      {format_seconds_per(avg, 'source')}",
+        f"Avg/cleared:     {format_seconds_per(avg_cleared, 'cleared source')}",
+        f"Program runtime: {format_seconds(summary.get('program_real_time_s'))}",
+        f"Local wall time: {format_seconds(summary.get('program_wall_time_s'))}",
         "",
         f"Movement:        {format_meters(summary.get('total_movement_distance_m'))}",
         f"Measures:        {summary.get('measure_count')}",
@@ -376,7 +396,7 @@ def print_run_summary(summary: dict[str, Any]) -> None:
         f"Clear failures:  {summary.get('clear_fail_count')}",
         "",
         "Logs saved to:",
-        f"logs/q3/{summary.get('run_id')}/",
+        f"{summary.get('run_dir') or 'N/A'}/",
         "================================================",
     ]
     print("\n".join(lines))
@@ -390,5 +410,18 @@ def format_seconds(value: Any) -> str:
     return "N/A" if value is None else f"{value:.3f} s"
 
 
+def format_seconds_per(value: Any, denominator: str) -> str:
+    return "N/A" if value is None else f"{value:.3f} s/{denominator}"
+
+
 def format_meters(value: Any) -> str:
     return "N/A" if value is None else f"{value:.2f} m"
+
+
+def _as_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None

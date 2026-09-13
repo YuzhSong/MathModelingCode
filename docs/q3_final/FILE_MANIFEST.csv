@@ -23,6 +23,7 @@ NEGATIVE_RESULT,results/offline_eval_ring_only_center_ablation_200/,ring-only fu
 NEGATIVE_RESULT,results/offline_eval_v6_nosignal_200/,no_signal full results,no,optional,no_signal,NEGATIVE_RESULT,yes,yes,original path preserved
 NEGATIVE_RESULT,results/offline_eval_v6_backbone_bundle_200/,backbone full results and trajectories,no,supplement,backbone,NEGATIVE_RESULT,yes,yes,original path preserved
 OFFICIAL_PRACTICE,main.py,Q3 official adapter entry,no,procedure,official practice,OFFICIAL_PRACTICE,yes,no,no raw result found
+OFFICIAL_PRACTICE,run_q3_final.py,clean final Q3 RARC/n=8 simulator entry,yes,procedure,official practice/formal,OFFICIAL_PRACTICE,yes,no,recommended for table 1 recording
 OFFICIAL_PRACTICE,scripts/run_official_practice.py,practice runner,no,procedure,official practice,OFFICIAL_PRACTICE,yes,no,never formal test
 SIMULATOR,offline_sim/,local API-shaped simulator,no,methods,all,FINAL_SUPPORT,yes,no,never modify physics
 GOVERNANCE,docs/q3_final/,final archive documentation,yes,main,archive,GOVERNANCE,yes,no,new archive layer

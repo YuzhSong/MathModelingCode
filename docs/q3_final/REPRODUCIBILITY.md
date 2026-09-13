@@ -34,7 +34,22 @@ Use the recorded `results/q3/offline_eval_ring_count_200/` outputs for the archi
 
 ## Official practice safety
 
-`main.py --mode official --strategy v6` and `scripts/run_official_practice.py` are practice-gated operational adapters, not offline benchmarks. Confirm the external simulator is in Q3 practice/simulation mode manually before any use. Never automate formal testing. No saved V6 official raw practice data was found in this repository.
+`run_q3_final.py` is the clean Q3 operational entry for simulator rehearsal and the manually started formal attempts. It fixes RARC/n=8 and does not expose historical strategy flags.
+
+```bash
+python3 run_q3_final.py --robot-id YOUR_TEAM_ID --base-url http://127.0.0.1:2026 --test-kind practice
+python3 run_q3_final.py --robot-id YOUR_TEAM_ID --base-url http://127.0.0.1:2026 --test-kind formal --case-id CASE_CODE
+```
+
+Confirm the external simulator is in the intended Q3 practice or formal module before use. The source code must not hard-code the team number; pass it through `--robot-id`, the `ROBOT_ID` environment variable, or the interactive prompt. The official table fields are recorded as follows:
+
+- `cleared_count`: count of accepted `/clear` responses with `clear_result="success"`.
+- `avg_time_per_cleared_s`: `total_virtual_time_s / cleared_count`.
+- `program_real_time_s`: `(exit.real_timestamp_ms - enter.real_timestamp_ms) / 1000`.
+
+The test case code is shown by the simulator UI and may not be returned by the API. Record it from the UI or pass it as `--case-id`.
+
+`main.py --mode official --strategy v6` and `scripts/run_official_practice.py` remain development adapters, not the recommended final table-entry workflow. No saved V6 official raw practice data was found in this repository.
 
 ## Frozen integrity
 

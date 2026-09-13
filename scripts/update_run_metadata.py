@@ -57,6 +57,7 @@ def update_source_count(run_id: str, source_count: int, base_dir: Path = BASE_DI
                 row["source_count"] = summary["source_count"]
                 row["clear_rate"] = summary["clear_rate"]
                 row["avg_time_per_source_s"] = summary["avg_time_per_source_s"]
+                row["avg_time_per_cleared_s"] = summary.get("avg_time_per_cleared_s")
         with target.open("w", encoding="utf-8", newline="") as fh:
             writer = csv.DictWriter(fh, fieldnames=RUNS_SUMMARY_FIELDS)
             writer.writeheader()
@@ -64,7 +65,8 @@ def update_source_count(run_id: str, source_count: int, base_dir: Path = BASE_DI
                 writer.writerow({key: row.get(key) for key in RUNS_SUMMARY_FIELDS})
 
     print(f"已补录 {run_id}: source_count={summary['source_count']}, "
-          f"clear_rate={summary['clear_rate']}, avg_time_per_source_s={summary['avg_time_per_source_s']}")
+          f"clear_rate={summary['clear_rate']}, avg_time_per_source_s={summary['avg_time_per_source_s']}, "
+          f"avg_time_per_cleared_s={summary.get('avg_time_per_cleared_s')}")
     return 0
 
 

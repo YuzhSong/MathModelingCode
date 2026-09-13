@@ -1,6 +1,6 @@
 # B题问题3代码
 
-当前仓库只实现问题3全向干扰源；不实现问题4。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。Q3 最终归档入口见 [docs/q3_final/README.md](docs/q3_final/README.md)。
+当前 Q3 最终候选为 RARC（内部实现 frozen V6/n=8）。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。Q3 最终归档入口见 [docs/q3_final/README.md](docs/q3_final/README.md)。
 
 ## 当前状态
 
@@ -42,15 +42,23 @@ python scripts/run_v6_eval.py --versions v4,v5b,v6 --random-seeds 0:100 --stress
 
 V6 结果见 `results/q3/offline_eval_v6_n8/report.md`。它是当前 Q3 final candidate；完整历史实验（包括失败消融）见 `docs/q3_final/EXPERIMENT_INDEX.md`，不要把历史负结果删除或覆盖。
 
-## 官方演练 API
+## Q3 官方演练/正式入口
 
-仅当官方模拟器已经由人工确认处于“问题3演练测试/模拟测试”时，才可运行。严禁在正式测试中运行，也不要把本地默认地址误认为官方地址。
+推荐使用干净正式入口；它固定 RARC/n=8，不暴露历史版本选择。源码不硬编码参赛队号，运行时用参数或交互输入。
 
 ```text
-python main.py --mode official --strategy v4 --robot-id YOUR_ID --base-url http://127.0.0.1:2026
+python run_q3_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind practice
 ```
 
-`--strategy v4/v3` 可切回冻结基线。完整参数见 `scripts/run_official_practice.py --help`（默认 v6，支持 `--search-points-n`）。
+正式三次测试时，把模拟器人工切到“问题3正式测试”并二次确认后，再使用：
+
+```text
+python run_q3_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind formal --case-id CASE_CODE
+```
+
+`CASE_CODE` 是模拟器界面显示的测试案例编码；接口通常不返回该字段，可以先留空，结束后从模拟器日志列表补记。本地日志会输出表 1 所需的“清除干扰源个数”“平均定位清除时间 = total_virtual_time_s / cleared_count”“程序运行时间 = exit.real_timestamp_ms - enter.real_timestamp_ms”。
+
+保留 `main.py --mode official --strategy v6` 作为开发入口，不建议正式填写表格时使用它。
 
 最小接口 smoke test：
 
