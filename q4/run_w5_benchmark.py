@@ -331,6 +331,11 @@ def render_report(
 
 
 def render_pilot(out_dir: Path, summary: list[dict[str, Any]], w4a: list[dict[str, Any]]) -> None:
+    if not w4a:
+        (out_dir / "pilot_report.md").write_text(
+            "# Q4 W5 geometry pilot\n\nW4-A comparison unavailable; raw W5 baseline artifacts are retained.\n",
+            encoding="utf-8")
+        return
     table = []
     for row in summary:
         if row["suite"] != "overall":
@@ -362,8 +367,14 @@ def main() -> int:
         details, sources, regrets = run_cases(specs, parse_seed_range(args.random_seeds), parse_seed_range(args.stress_seeds))
         add_source_case_metrics(details, sources)
     summaries = [summarize(details, name, suite) for name in names for suite in ("random", "min_reff", "collinear", "overall")]
-    w4a = read_csv(Path("results/q4/w4a/details.csv"))
-    add_source_case_metrics(w4a, read_csv(Path("results/q4/w4a/source_local.csv")))
+    w4a_path = Path("results/q4/w4a/details.csv")
+    if w4a_path.is_file():
+        w4a = read_csv(w4a_path)
+        add_source_case_metrics(w4a, read_csv(Path("results/q4/w4a/source_local.csv")))
+    else:
+        # Baseline generation must remain reproducible in a clean checkout;
+        # W4-A is only needed for comparative deltas, not W5 raw artifacts.
+        w4a = []
     write_union_csv(out_dir / "details.csv", details)
     write_union_csv(out_dir / "source_local.csv", sources)
     write_union_csv(out_dir / "clear_delay_regret.csv", regrets)

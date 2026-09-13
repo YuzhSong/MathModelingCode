@@ -14,7 +14,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--strategy",
         default=None,
-        help="Q3: v3/v4/v6 (default v6). Q4: w5 (default).",
+        help="Q3: v3/v4/v6 (default v6). Q4: w5/w5pro (default w5).",
     )
     parser.add_argument("--robot-id", default=os.getenv("ROBOT_ID"))
     parser.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:2026"))
@@ -65,17 +65,19 @@ def main() -> int:
         return 2
 
     if args.problem == "4":
-        if args.strategy != "w5":
-            print("Q4 官方模式当前只支持 --strategy w5。", file=sys.stderr)
+        if args.strategy not in ("w5", "w5pro"):
+            print("Q4 官方模式当前只支持 --strategy w5 或 w5pro。", file=sys.stderr)
             return 2
         from q3.api_client import RequestIdFactory, SimulatorClient
         from q3.logger import JsonlLogger
         from q3.run_logger import RunLogger, print_run_summary
         from q3.offline_policy import OfficialClientRunnerAdapter
         from q4.w5_policy import W5SymmetricDetectionPolicy
+        from q4.w5pro_policy import W5ProPolicy
+        from q4.w5pro_config import PRODUCTION_CONFIG
 
         logger = JsonlLogger(Path(args.log.replace("q3_", "q4_")))
-        run_logger = RunLogger(base_dir="logs/q4", mode="practice", strategy="w5", problem=4)
+        run_logger = RunLogger(base_dir="logs/q4", mode="practice", strategy=args.strategy, problem=4)
         client = SimulatorClient(
             robot_id=args.robot_id,
             base_url=args.base_url,
@@ -83,7 +85,9 @@ def main() -> int:
             logger=logger,
             run_logger=run_logger,
         )
-        policy = W5SymmetricDetectionPolicy(OfficialClientRunnerAdapter(client))
+        runner = OfficialClientRunnerAdapter(client)
+        policy = (W5SymmetricDetectionPolicy(runner) if args.strategy == "w5"
+                  else W5ProPolicy(runner, PRODUCTION_CONFIG))
         policy.run()
         print(f"Q4 W5 practice run complete; log: {logger.path.resolve()}")
         if run_logger.summary:

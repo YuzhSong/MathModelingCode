@@ -1,0 +1,9 @@
+{
+  "items": 239,
+  "code": 239,
+  "tests": 239,
+  "item_runtime": 2,
+  "missing_item_evidence_ids": [],
+  "strict_pass": true,
+  "shared_runtime_note": "74/74 hard episodes in shared matrix; not an item-level proof"
+}

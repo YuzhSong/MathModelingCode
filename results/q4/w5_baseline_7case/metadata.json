@@ -1,0 +1,19 @@
+{
+  "environment": "local offline_sim/practice only",
+  "problem": 4,
+  "margin_m": 0.0,
+  "fixed_detection_point_count": 25,
+  "strategies": [
+    "a970_p140"
+  ],
+  "geometry": {
+    "a970_p140": {
+      "side_m": 970.0,
+      "cap_extension_m": 140.0,
+      "supplement_radius_m": 1820.0892833418109
+    }
+  },
+  "inherits": "frozen W4-A dynamic routing; no W4-B commitment",
+  "official_practice_run": false,
+  "official_formal_test_run": false
+}
