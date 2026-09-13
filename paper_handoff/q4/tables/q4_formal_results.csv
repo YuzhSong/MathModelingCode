@@ -1,0 +1,4 @@
+"test_index","case_id","cleared_count","total_virtual_time_s","avg_time_per_cleared_s","program_real_time_s","clear_fail_count","local_run_id","official_log_filename"
+"1","7WW2-ZAXP-SX22-8QY6","12","6801.376728","566.781394","7.179","0","20260913_170856_practice_021","formal-p4-1-7WW2-ZAXP-SX22-8QY6.jlog"
+"2","XWAC-7BTA-4XUZ-K7PX","10","6950.005842","695.0005841999999","7.157","0","20260913_170947_practice_022","formal-p4-2-XWAC-7BTA-4XUZ-K7PX.jlog"
+"3","JG75-UXMB-2TR9-S928","13","7083.810372","544.9084901538462","10.906","0","20260913_171032_practice_023","formal-p4-3-JG75-UXMB-2TR9-S928.jlog"

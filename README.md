@@ -7,6 +7,7 @@
 - 离线论文数据总入口：[docs/final/README.md](docs/final/README.md)。最终摘要见 [docs/final/OFFLINE_FINAL_SUMMARY.md](docs/final/OFFLINE_FINAL_SUMMARY.md)，结果索引见 [results/Q3_FINAL_INDEX.md](results/Q3_FINAL_INDEX.md) 和 [results/Q4_FINAL_INDEX.md](results/Q4_FINAL_INDEX.md)。
 - Official formal results: `official_results/q3/q3_formal_summary.csv` and `official_results/q4/q4_formal_summary.csv`; each contains exactly 3 formal runs. See [docs/final/OFFICIAL_RESULTS_INDEX.md](docs/final/OFFICIAL_RESULTS_INDEX.md). Do not infer formal values from offline runs.
 - Historical V0~V6 / W0~W8 and ablations are kept for reproducibility and are not final competition policies.
+- Paper handoff package: [`paper_handoff/README.md`](paper_handoff/README.md)，包含完整最终代码附录、正式表、离线结果和图表来源索引。
 
 本轮仅合并已完成的 Windows 正式结果并整理 Mac 归档；没有重新运行 benchmark、没有调用官方接口、没有删除历史结果。
 

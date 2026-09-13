@@ -1,0 +1,4 @@
+"test_index","case_id","cleared_count","total_virtual_time_s","avg_time_per_cleared_s","program_real_time_s","clear_fail_count","local_run_id","official_log_filename"
+"1","2MEW-MBMB-RNRU-9DMG","15","3798.839882","253.25599213333334","6.569","0","20260913_150710_practice_005","formal-p3-1-2MEW-MBMB-RNRU-9DMG.jlog"
+"2","XG3E-MNVY-ZFKX-Z79E","12","3085.18772","257.09897666666666","4.151","0","20260913_150815_practice_006","formal-p3-2-XG3E-MNVY-ZFKX-Z79E.jlog"
+"3","THSW-FG94-PJYA-3NJG","14","3922.937342","280.2098101428572","5.127","0","20260913_150930_practice_007","formal-p3-3-THSW-FG94-PJYA-3NJG.jlog"
