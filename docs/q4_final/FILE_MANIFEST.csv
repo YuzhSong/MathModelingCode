@@ -1,0 +1,22 @@
+category,path,description,final_candidate_related,paper_relevance,experiment,status,keep,safe_to_archive,notes
+FINAL_CORE,q4/w6_policy.py,Final W6-25PFR policy implementation,yes,main,W6-25PFR,FINAL_CORE,yes,no,25-point persistent feasible-region policy
+FINAL_CORE,q4/final_policy.py,Thin final Q4 wrapper to W6-25PFR,yes,main,W6-25PFR,FINAL_CORE,yes,no,single source of truth
+FINAL_CORE,q4/w5_geometry.py,25-point geometry construction and checks,yes,main,W5 geometry,FINAL_CORE,yes,no,a=970 p=140
+FINAL_SUPPORT,q4/w2_policy.py,Persistent target lifecycle,yes,main,W2,CORE_MECHANISM,yes,no,ancestor mechanism
+FINAL_SUPPORT,q4/w3_policy.py,Adaptive reacquisition,yes,main,W3,CORE_MECHANISM,yes,no,ancestor mechanism
+FINAL_SUPPORT,q4/w4a_policy.py,Unified rolling task pool,yes,main,W4-A,CORE_MECHANISM,yes,no,ancestor mechanism
+FINAL_SUPPORT,q4/routing.py,Q4 routing utilities,yes,methods,W4-W5,FINAL_SUPPORT,yes,no,open_route retained
+OFFICIAL_PRACTICE,run_q4_final.py,Clean Q4 final official runner,yes,procedure,official practice/formal,OFFICIAL_PRACTICE,yes,no,recommended final operational entry
+OFFICIAL_PRACTICE,main.py,Unified development adapter,yes,procedure,official practice,OFFICIAL_PRACTICE,yes,no,supports --problem 4 --strategy w5
+FINAL_EVIDENCE,results/q4/w6/feasible_region_full/,Final W6-25PFR 200-case validation,yes,main,final validation,FINAL_EVIDENCE,yes,no,completed CSV retained unchanged
+FINAL_EVIDENCE,results/q4/final_documentation/,Paper data package and evidence index,yes,main,documentation,FINAL_EVIDENCE,yes,no,source for docs/q4_final
+NEGATIVE_RESULT,results/q4/w0_baseline/,Q3 transfer failure baseline,no,main/ablation,W0,NEGATIVE_RESULT,yes,yes,do not delete
+CORE_EXPERIMENT,results/q4/w2/,Lifecycle evidence,yes,main/ablation,W2,CORE_EXPERIMENT,yes,yes,method mechanism
+CORE_EXPERIMENT,results/q4/w3/,Adaptive reacquisition evidence,yes,main/ablation,W3,CORE_EXPERIMENT,yes,yes,method mechanism
+CORE_EXPERIMENT,results/q4/w4a/,Dynamic routing evidence,yes,main/ablation,W4-A,CORE_EXPERIMENT,yes,yes,method mechanism
+NEGATIVE_RESULT,results/q4/w4b/,Continuity negative result,no,supplement,W4-B,NEGATIVE_RESULT,yes,yes,do not delete
+HISTORICAL_RESULT,results/q4/w6a_decomposition/,W6-A tail robustness experiment,no,supplement,W6-A,HISTORICAL_RESULT,yes,yes,not final
+NEGATIVE_RESULT,results/q4/w7_macro_regret/,Shadow macro-regret diagnostic,no,archive/supplement,W7,NEGATIVE_RESULT,yes,yes,not final
+NEGATIVE_RESULT,results/q4/w8_stale_repair/,Stale-state repair candidate,no,supplement,W8,NEGATIVE_RESULT,yes,yes,robustness comparison only
+SIMULATOR,offline_sim/,Local API-shaped simulator,no,methods,all,FINAL_SUPPORT,yes,no,do not modify physics for formal preparation
+GOVERNANCE,docs/q4_final/,Final Q4 archive layer,yes,main,archive,GOVERNANCE,yes,no,new index only

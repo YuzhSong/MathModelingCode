@@ -1,0 +1,31 @@
+{
+  "policy": "25G-ASR base W5 + persistent bearing certificate (experimental W6)",
+  "environment": "local offline_sim/practice only",
+  "random_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "stress_seeds": [
+    10000,
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006,
+    10007,
+    10008,
+    10009
+  ],
+  "case_count": 30,
+  "official_interface_used": false,
+  "historical_results_overwritten": false
+}

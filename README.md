@@ -1,10 +1,11 @@
 # B题问题3代码
 
-当前 Q3 最终候选为 RARC（内部实现 frozen V6/n=8）。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。Q3 最终归档入口见 [docs/q3_final/README.md](docs/q3_final/README.md)。
+当前 Q3 最终候选为 RARC（内部实现 frozen V6/n=8），Q4 最终冻结策略为 W6-25PFR。论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。策略代际见 [docs/VERSIONS.md](docs/VERSIONS.md)。
 
 ## 当前状态
 
 - Q3 正式冻结方案为 frozen V6/n=8；论文层名称为 Route-Aware Rolling Coordination (RARC)。V6 是内部实现标识，不改代码命名。V4/n=8 保留为冻结对照基线。离线入口分别为 `q3.offline_policy.policy_v4` 和 `q3.v6_policy.policy_v6`。
+- Q4 正式冻结方案为 W6-25PFR；论文层名称为 25-Point Symmetric Search with Persistent Feasible-Region Clearing（25P-PFRC）。W0-W5、W6-A、W7、W8 仅作为历史演化、消融和鲁棒性证据。
 - 官方 HTTP 入口显式支持 V6；`--strategy v4` 可切回对照基线。运行前必须人工确认模拟器处于演练模式；正式测试不自动运行。
 - 自动化评估只使用本地 `offline_sim/`，不会连接官方服务器。
 - 官方接口仅有 `POST /enter`、`/measure`、`/clear`、`/exit`。
@@ -59,6 +60,22 @@ python run_q3_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --tes
 `CASE_CODE` 是模拟器界面显示的测试案例编码；接口通常不返回该字段，可以先留空，结束后从模拟器日志列表补记。本地日志会输出表 1 所需的“清除干扰源个数”“平均定位清除时间 = total_virtual_time_s / cleared_count”“程序运行时间 = exit.real_timestamp_ms - enter.real_timestamp_ms”。
 
 保留 `main.py --mode official --strategy v6` 作为开发入口，不建议正式填写表格时使用它。
+
+## Q4 官方演练/正式入口
+
+推荐使用干净正式入口；它固定 W6-25PFR，不暴露历史版本选择。
+
+```text
+python run_q4_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind practice
+```
+
+正式三次测试时，把模拟器人工切到“问题4正式测试”并二次确认后，再使用：
+
+```text
+python run_q4_final.py --robot-id YOUR_ID --base-url http://127.0.0.1:2026 --test-kind formal --case-id CASE_CODE
+```
+
+结束后终端和 `logs/q4_final/` 会记录表格字段：清除干扰源个数、平均定位清除时间、程序运行时间。
 
 最小接口 smoke test：
 
